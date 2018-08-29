@@ -15,26 +15,20 @@ buildscript {
 }
 
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.0.9"
+    id "com.matthewprenger.cursegradle" version "1.1.0"
 }
+
 repositories {
     maven {
-        name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven'
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "modmaven.k-4u.nl"
-    }
-    maven {
-        url 'http://dogforce-games.com/maven'
+        name 'LDTTeam - Modding'
+        url 'https://ldtteam.jfrog.io/ldtteam/modding/'
     }
 }
 
 apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
 
 jacocoTestReport {
     reports {
@@ -98,6 +92,7 @@ configFile.withReader {
 }
 
 dependencies {
+    deobfCompile "com.ldtteam:blockout:${config.minecraft_version}-${config.blockout_version}"
     deobfCompile "slimeknights.mantle:Mantle:1.12-${config.mantle_version}"
     deobfCompile "slimeknights:TConstruct:1.12.2-${config.tinker_version}"
     deobfCompile "gigaherz.guidebook:Guidebook-1.12.2:${config.guidebook_version}"
@@ -191,11 +186,30 @@ jar {
     }
 }
 
+javadoc {
+    source += sourceSets.api.allSource
+    source += sourceSets.blockOut.allSource
+    source += sourceSets.structures.allSource
+}
+
+// add a javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
 reobf {
     jar {}
     apiJar {}
     blockOutJar {}
     structuresJar {}
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives apiJar
+    archives sourceJar
 }
 
 javadoc {
@@ -239,7 +253,17 @@ curseforge {
             changelogType = 'markdown'
             releaseType = System.getenv().CURSERELEASETYPE
 
+            mainArtifact (jar) {
+                displayName = "Minecolonies: " + version
+
+                relations {
+                    requiredDependency 'blockout' // blockout is required
+                }
+            }
+
+
             addArtifact apiJar
+            addArtifact sourceJar
         }
     }
     else
