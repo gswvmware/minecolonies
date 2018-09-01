@@ -1,6 +1,10 @@
 package com.minecolonies.coremod.blocks.huts;
 
 import com.minecolonies.api.util.constant.Constants;
+import com.minecolonies.blockout.BlockOut;
+import com.minecolonies.blockout.binding.dependency.DependencyObjectHelper;
+import com.minecolonies.blockout.connector.core.inventory.builder.IItemHandlerManagerBuilder;
+import com.minecolonies.blockout.element.root.RootGuiElement;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.blocks.AbstractBlockMinecoloniesContainer;
 import com.minecolonies.coremod.colony.Colony;
@@ -16,10 +20,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -176,9 +177,37 @@ public class BlockHutField extends AbstractBlockMinecoloniesContainer<BlockHutFi
         if (!worldIn.isRemote)
         {
             @Nullable final Colony colony = ColonyManager.getColony(worldIn, pos);
-            if (colony != null)
+            @Nullable final TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if (colony != null && tileEntity instanceof ScarecrowTileEntity)
             {
-                playerIn.openGui(MineColonies.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                @NotNull final ScarecrowTileEntity scarecrowTileEntity = (ScarecrowTileEntity) tileEntity;
+                BlockOut.getBlockOut().getProxy().getGuiController().openUI(
+                  playerIn,
+                  iGuiKeyBuilder -> iGuiKeyBuilder
+                                      .forPosition(worldIn, pos)
+                                      .usingDefaultData()
+                                      .withItemHandlerManager((IItemHandlerManagerBuilder iItemHandlerManagerBuilder) ->
+                                                                iItemHandlerManagerBuilder
+                                                                  .withTileBasedProvider(
+                                                                    new ResourceLocation("minecolonies:scarecrow"),
+                                                                    tileEntity,
+                                                                   null
+                                                                  )
+                                                                  .withEntityBasedProvider(
+                                                                    new ResourceLocation("minecraft:player"),
+                                                                    playerIn,
+                                                                   null
+                                                                  )
+                                      )
+                                      .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/scarecrow.json"))
+                                      .usingData(iBlockOutGuiConstructionDataBuilder ->
+                                                   iBlockOutGuiConstructionDataBuilder
+                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
+                                                     .withDependentDataContext(DependencyObjectHelper.createFromValue(scarecrowTileEntity))
+                                                     .done()
+                                      )
+
+                );
                 return true;
             }
         }
