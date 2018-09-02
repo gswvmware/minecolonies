@@ -14,11 +14,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -32,17 +34,12 @@ import static net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND;
 /**
  * The scarecrow tile entity to store extra data.
  */
-public class ScarecrowTileEntity extends TileEntityChest
+public class ScarecrowTileEntity extends TileEntity
 {
     /**
      * The max width/length of a field.
      */
     private static final int MAX_RANGE = 5;
-
-    /**
-     * The fields location.
-     */
-    private BlockPos location;
 
     /**
      * Has the field be taken by any worker?
@@ -122,7 +119,7 @@ public class ScarecrowTileEntity extends TileEntityChest
     public ScarecrowTileEntity()
     {
         super();
-        name = LanguageHandler.format("com.minecolonies.coremod.gui.scarecrow.user", LanguageHandler.format(owner));
+        name = "${com.minecolonies.coremod.gui.scarecrow.user}${"+owner+"}";
     }
 
     /**
@@ -143,7 +140,6 @@ public class ScarecrowTileEntity extends TileEntityChest
     public void setName(final String name)
     {
         this.name = name;
-        setCustomName(name);
         markDirty();
     }
 
@@ -213,7 +209,7 @@ public class ScarecrowTileEntity extends TileEntityChest
     public BlockPos getID()
     {
         // Location doubles as ID
-        return this.location;
+        return this.getPos();
     }
 
     /**
@@ -353,7 +349,7 @@ public class ScarecrowTileEntity extends TileEntityChest
      */
     public BlockPos getLocation()
     {
-        return this.location;
+        return this.getPos();
     }
 
     /**
@@ -492,11 +488,15 @@ public class ScarecrowTileEntity extends TileEntityChest
                 colony.getBuildingManager().addNewField(this, pos, world);
             }
         }
+        setOwner(ownerId);
     }
 
     @Override
     public void readFromNBT(final NBTTagCompound compound)
     {
+        super.readFromNBT(compound);
+        onLoad();
+
         final NBTTagList inventoryTagList = compound.getTagList(TAG_INVENTORY, TAG_COMPOUND);
         for (int i = 0; i < inventoryTagList.tagCount(); ++i)
         {
@@ -520,14 +520,12 @@ public class ScarecrowTileEntity extends TileEntityChest
         widthMinusZ = compound.getInteger(TAG_WIDTH_MINUS);
         ownerId = compound.getInteger(TAG_OWNER);
         name = compound.getString(TAG_NAME);
-        setOwner(ownerId);
-
-        super.readFromNBT(compound);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(final NBTTagCompound compound)
+    public NBTTagCompound writeToNBT(final NBTTagCompound theCompound)
     {
+        final NBTTagCompound compound =  super.writeToNBT(theCompound);
         @NotNull final NBTTagList inventoryTagList = new NBTTagList();
         for (int slot = 0; slot < inventory.getSlots(); slot++)
         {
@@ -554,7 +552,7 @@ public class ScarecrowTileEntity extends TileEntityChest
         compound.setInteger(TAG_OWNER, ownerId);
         compound.setString(TAG_NAME, name);
 
-        return super.writeToNBT(compound);
+        return compound;
     }
 
 
@@ -581,5 +579,25 @@ public class ScarecrowTileEntity extends TileEntityChest
     {
         PUMPKINHEAD,
         NORMAL
+    }
+
+    @Override
+    public boolean hasCapability(@NotNull final Capability<?> capability, final EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            return true;
+        }
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(@NotNull final Capability<T> capability, final EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            return (T) inventory;
+        }
+        return super.getCapability(capability, facing);
     }
 }
