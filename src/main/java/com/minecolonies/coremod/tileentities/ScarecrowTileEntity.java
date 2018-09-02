@@ -2,6 +2,7 @@ package com.minecolonies.coremod.tileentities;
 
 import com.minecolonies.api.util.EntityUtils;
 import com.minecolonies.api.util.ItemStackUtils;
+import com.minecolonies.blockout.element.simple.Label;
 import com.minecolonies.coremod.colony.Colony;
 import com.minecolonies.coremod.colony.ColonyManager;
 import com.minecolonies.coremod.colony.ColonyView;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 import static com.minecolonies.api.util.constant.NbtTagConstants.*;
+import static com.minecolonies.api.util.constant.TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_SCARECROW_USER;
 import static net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND;
 
 /**
@@ -118,7 +120,7 @@ public class ScarecrowTileEntity extends TileEntity
     public ScarecrowTileEntity()
     {
         super();
-        name = "${com.minecolonies.coremod.gui.scarecrow.user}${"+owner+"}";
+        name = "${" + COM_MINECOLONIES_COREMOD_GUI_SCARECROW_USER + "}${"+owner+"}";
     }
 
     /**
@@ -376,7 +378,7 @@ public class ScarecrowTileEntity extends TileEntity
      *
      * @param ownerId the id of the citizen.
      */
-    public void setOwner(@NotNull final int ownerId)
+    public void setOwner(final int ownerId)
     {
         this.ownerId = ownerId;
         if(colony != null)
@@ -390,7 +392,8 @@ public class ScarecrowTileEntity extends TileEntity
                 owner = colony.getCitizenManager().getCitizen(ownerId).getName();
             }
         }
-        setName("${com.minecolonies.coremod.gui.scarecrow.user}${"+owner+"}");
+
+        setName("${" + COM_MINECOLONIES_COREMOD_GUI_SCARECROW_USER + "}${"+owner+"}");
         markDirty();
     }
 
@@ -400,7 +403,7 @@ public class ScarecrowTileEntity extends TileEntity
      * @param ownerId the name of the citizen.
      * @param tempColony the colony view.
      */
-    public void setOwner(@NotNull final int ownerId, final ColonyView tempColony)
+    public void setOwner(final int ownerId, final ColonyView tempColony)
     {
         this.ownerId = ownerId;
         if(tempColony != null)
