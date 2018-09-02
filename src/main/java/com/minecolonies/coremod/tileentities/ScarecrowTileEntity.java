@@ -2,7 +2,6 @@ package com.minecolonies.coremod.tileentities;
 
 import com.minecolonies.api.util.EntityUtils;
 import com.minecolonies.api.util.ItemStackUtils;
-import com.minecolonies.api.util.LanguageHandler;
 import com.minecolonies.coremod.colony.Colony;
 import com.minecolonies.coremod.colony.ColonyManager;
 import com.minecolonies.coremod.colony.ColonyView;
@@ -477,7 +476,6 @@ public class ScarecrowTileEntity extends TileEntity
     {
         super.onLoad();
         final World world = getWorld();
-
         colony = ColonyManager.getColony(world, pos);
         if (colony != null && !colony.getBuildingManager().getFields().contains(pos))
         {
@@ -495,8 +493,6 @@ public class ScarecrowTileEntity extends TileEntity
     public void readFromNBT(final NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        onLoad();
-
         final NBTTagList inventoryTagList = compound.getTagList(TAG_INVENTORY, TAG_COMPOUND);
         for (int i = 0; i < inventoryTagList.tagCount(); ++i)
         {
