@@ -295,6 +295,16 @@ public class BlockMinecoloniesRack extends AbstractBlockMinecolonies<BlockMineco
         {
             if (!worldIn.isRemote)
             {
+                final String name;
+                if (((TileEntityRack) tileEntity).getNeighbor() != null)
+                {
+                    name = "double_rack";
+                }
+                else
+                {
+                    name = "rack";
+                }
+
                 BlockOut.getBlockOut().getProxy().getGuiController().openUI(
                   playerIn,
                   iGuiKeyBuilder -> iGuiKeyBuilder
@@ -313,7 +323,7 @@ public class BlockMinecoloniesRack extends AbstractBlockMinecolonies<BlockMineco
                                                                     null
                                                                   )
                                       )
-                                      .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/rack.json"))
+                                      .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/"+ name +".json"))
                                       .usingData(iBlockOutGuiConstructionDataBuilder ->
                                                    iBlockOutGuiConstructionDataBuilder
                                                      .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)

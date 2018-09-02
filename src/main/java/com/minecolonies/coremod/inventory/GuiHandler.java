@@ -38,7 +38,7 @@ public class GuiHandler implements IGuiHandler
             }
             else
             {
-                @Nullable final AbstractBuilding building = ColonyManager.getBuilding(world, new BlockPos(x,y,z));
+                @Nullable final AbstractBuilding building = ColonyManager.getBuilding(world, new BlockPos(x, y, z));
                 if (building != null)
                 {
                     return new CraftingGUIBuilding(player.inventory, world);
@@ -64,10 +64,10 @@ public class GuiHandler implements IGuiHandler
             final AbstractBuilding building = citizen.getWorkBuilding();
 
             return new ContainerMinecoloniesCitizenInventory(player.inventory,
-                                                              citizen.getInventory(),
-                                                              colony.getID(),
-                                                              building == null ? null : building.getID(),
-                                                              citizen.getId());
+              citizen.getInventory(),
+              colony.getID(),
+              building == null ? null : building.getID(),
+              citizen.getId());
         }
         return null;
     }
@@ -78,22 +78,11 @@ public class GuiHandler implements IGuiHandler
         if (id == ID.DEFAULT.ordinal())
         {
             final BlockPos pos = new BlockPos(x, y, z);
-            final TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof ScarecrowTileEntity)
+
+            @Nullable final AbstractBuildingView building = ColonyManager.getBuildingView(new BlockPos(x, y, z));
+            if (building instanceof AbstractBuildingWorker.View)
             {
-                return new GuiField(player.inventory, (ScarecrowTileEntity) tileEntity, world, pos);
-            }
-            else if (tileEntity instanceof TileEntityRack)
-            {
-                return new GuiRack(player.inventory, (TileEntityRack) tileEntity, ((TileEntityRack) tileEntity).getOtherChest(), world, pos);
-            }
-            else
-            {
-                @Nullable final AbstractBuildingView building = ColonyManager.getBuildingView(new BlockPos(x,y,z));
-                if (building instanceof AbstractBuildingWorker.View)
-                {
-                    return new WindowGuiCrafting(player.inventory, world, (AbstractBuildingWorker.View) building);
-                }
+                return new WindowGuiCrafting(player.inventory, world, (AbstractBuildingWorker.View) building);
             }
         }
         else if (id == ID.BUILDING_INVENTORY.ordinal())

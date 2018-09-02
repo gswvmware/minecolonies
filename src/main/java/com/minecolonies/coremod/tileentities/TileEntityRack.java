@@ -529,6 +529,10 @@ public class TileEntityRack extends TileEntity
      */
     public BlockPos getNeighbor()
     {
+        if (relativeNeighbor == null)
+        {
+            return null;
+        }
         return pos.subtract(relativeNeighbor);
     }
 
