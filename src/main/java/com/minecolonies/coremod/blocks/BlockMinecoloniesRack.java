@@ -4,11 +4,16 @@ import com.minecolonies.api.colony.permissions.Action;
 import com.minecolonies.api.util.BlockPosUtil;
 import com.minecolonies.api.util.InventoryUtils;
 import com.minecolonies.api.util.constant.Constants;
+import com.minecolonies.blockout.BlockOut;
+import com.minecolonies.blockout.binding.dependency.DependencyObjectHelper;
+import com.minecolonies.blockout.connector.core.inventory.builder.IItemHandlerManagerBuilder;
+import com.minecolonies.blockout.element.root.RootGuiElement;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.blocks.types.RackType;
 import com.minecolonies.coremod.colony.Colony;
 import com.minecolonies.coremod.colony.ColonyManager;
 import com.minecolonies.coremod.creativetab.ModCreativeTabs;
+import com.minecolonies.coremod.tileentities.ScarecrowTileEntity;
 import com.minecolonies.coremod.tileentities.TileEntityRack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -290,7 +295,33 @@ public class BlockMinecoloniesRack extends AbstractBlockMinecolonies<BlockMineco
         {
             if (!worldIn.isRemote)
             {
-                playerIn.openGui(MineColonies.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                BlockOut.getBlockOut().getProxy().getGuiController().openUI(
+                  playerIn,
+                  iGuiKeyBuilder -> iGuiKeyBuilder
+                                      .forPosition(worldIn, pos)
+                                      .usingDefaultData()
+                                      .withItemHandlerManager((IItemHandlerManagerBuilder iItemHandlerManagerBuilder) ->
+                                                                iItemHandlerManagerBuilder
+                                                                  .withTileBasedProvider(
+                                                                    new ResourceLocation("minecolonies:rack"),
+                                                                    tileEntity,
+                                                                    null
+                                                                  )
+                                                                  .withEntityBasedProvider(
+                                                                    new ResourceLocation("minecraft:player"),
+                                                                    playerIn,
+                                                                    null
+                                                                  )
+                                      )
+                                      .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/rack.json"))
+                                      .usingData(iBlockOutGuiConstructionDataBuilder ->
+                                                   iBlockOutGuiConstructionDataBuilder
+                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
+                                                     .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity))
+                                                     .done()
+                                      )
+
+                );
             }
             return true;
         }

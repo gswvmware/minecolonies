@@ -1,4 +1,5 @@
 [
   "minecolonies:styles/scarecrow/style.json",
-  "minecolonies:styles/general/style.json"
+  "minecolonies:styles/general/style.json",
+  "minecolonies:styles/rack/style.json"
 ]

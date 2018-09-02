@@ -1,0 +1,13 @@
+{
+  "id": "image",
+  "resources": [
+    {
+      "id": "image:rack_main",
+      "data": "minecolonies:styles/rack/image/rack_main.png"
+    },
+    {
+      "id": "image:rack_player",
+      "data": "minecolonies:styles/rack/image/rack_player.png"
+    }
+  ]
+}

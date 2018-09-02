@@ -1,0 +1,6 @@
+{
+  "id": "minecolonies:rack",
+  "types": [
+    "minecolonies:styles/rack/image/images.json"
+  ]
+}
