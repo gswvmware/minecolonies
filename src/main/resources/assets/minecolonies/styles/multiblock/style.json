@@ -1,0 +1,6 @@
+{
+  "id": "minecolonies:multiblock",
+  "types": [
+    "minecolonies:styles/multiblock/image/images.json"
+  ]
+}

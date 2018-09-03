@@ -1,6 +1,10 @@
 package com.minecolonies.coremod.blocks;
 
 import com.minecolonies.api.util.constant.Constants;
+import com.minecolonies.blockout.BlockOut;
+import com.minecolonies.blockout.binding.dependency.DependencyObjectHelper;
+import com.minecolonies.blockout.connector.core.inventory.builder.IItemHandlerManagerBuilder;
+import com.minecolonies.blockout.element.root.RootGuiElement;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.creativetab.ModCreativeTabs;
 import com.minecolonies.coremod.tileentities.TileEntityMultiBlock;
@@ -11,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -75,9 +80,24 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
             final float hitY,
             final float hitZ)
     {
-        if (worldIn.isRemote)
+        final TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (!worldIn.isRemote && tileEntity instanceof TileEntityMultiBlock)
         {
-            MineColonies.proxy.openMultiBlockWindow(pos);
+            BlockOut.getBlockOut().getProxy().getGuiController().openUI(
+              playerIn,
+              iGuiKeyBuilder -> iGuiKeyBuilder
+                                  .forPosition(worldIn, pos)
+                                  .usingDefaultData()
+                                  .withDefaultItemHandlerManager()
+                                  .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/multiblock.json"))
+                                  .usingData(iBlockOutGuiConstructionDataBuilder ->
+                                               iBlockOutGuiConstructionDataBuilder
+                                                 .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
+                                                 .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity))
+                                                 .done()
+                                  )
+
+            );
         }
         return true;
     }

@@ -1,0 +1,64 @@
+{
+  "id":"root",
+  "type": "blockout:root",
+  "style": "minecolonies:multiblock",
+  "size": "176,176",
+  "children": [
+    {
+      "id":"multiblock_main",
+      "type":"blockout:region",
+      "size":"176,176",
+      "margin":"0,0",
+      "children": [
+        {
+          "id": "range_label",
+          "type": "blockout:label",
+          "size": "40, 16",
+          "margin": "19,32",
+          "alignment":"LEFT,TOP",
+          "content": "${com.minecolonies.coremod.gui.multiblock.range}"
+        },
+        {
+          "id": "range_label",
+          "type": "blockout:label",
+          "size": "40, 16",
+          "margin": "19,32",
+          "alignment":"LEFT,TOP",
+          "content": "${com.minecolonies.coremod.gui.multiblock.range}"
+        },
+        {
+          "id": "speed_label",
+          "type": "blockout:label",
+          "size": "40, 16",
+          "margin": "19,48",
+          "alignment":"LEFT,TOP",
+          "content": "${com.minecolonies.coremod.gui.multiblock.speed}"
+        },
+        {
+          "id": "range_input",
+          "type": "blockout:textfield",
+          "size": "16, 13",
+          "margin": "54,30",
+          "alignment":"LEFT,TOP",
+          "content": "{Binding:RangeString}"
+        },
+        {
+          "id": "speed_input",
+          "type": "blockout:textfield",
+          "size": "16, 13",
+          "margin": "54,45",
+          "alignment":"LEFT,TOP",
+          "content": "{Binding:SpeedString}"
+        },
+        {
+          "id": "up_button",
+          "type": "blockout:button",
+          "size": "32, 32",
+          "margin": "32,-5",
+          "alignment":"LEFT,TOP",
+          "icon": "image:up"
+        }
+      ]
+    }
+  ]
+}
