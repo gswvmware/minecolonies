@@ -19,14 +19,6 @@
           "content": "${com.minecolonies.coremod.gui.multiblock.range}"
         },
         {
-          "id": "range_label",
-          "type": "blockout:label",
-          "size": "40, 16",
-          "margin": "19,32",
-          "alignment":"LEFT,TOP",
-          "content": "${com.minecolonies.coremod.gui.multiblock.range}"
-        },
-        {
           "id": "speed_label",
           "type": "blockout:label",
           "size": "40, 16",
@@ -46,7 +38,7 @@
           "type": "blockout:textfield",
           "size": "16, 13",
           "margin": "54,45",
-          "alignment":"LEFT,TOP",
+          "alignment":"LEFT,TOP"
         },
         {
           "id": "up_button",
@@ -54,7 +46,9 @@
           "size": "32, 32",
           "margin": "32,-5",
           "alignment":"LEFT,TOP",
-          "icon": "image:up"
+          "defaultBackgroundImage": "image:up",
+          "disabledBackgroundImage": "image:up",
+          "clickedBackgroundImage": "image:up"
         }
       ]
     }
