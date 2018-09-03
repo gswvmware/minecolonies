@@ -1,0 +1,37 @@
+{
+  "id": "image",
+  "resources": [
+    {
+      "id": "image:cancel",
+      "data": "minecolonies:styles/arrows/image/cancel.png"
+    },
+    {
+      "id": "image:confirm",
+      "data": "minecolonies:styles/arrows/image/confirm.png"
+    },
+    {
+      "id": "image:copy",
+      "data": "minecolonies:styles/arrows/image/copy.png"
+    },
+    {
+      "id": "image:cut",
+      "data": "minecolonies:styles/arrows/image/cut.png"
+    },
+    {
+      "id": "image:up",
+      "data": "minecolonies:styles/arrows/image/up.png"
+    },
+    {
+      "id": "image:down",
+      "data": "minecolonies:styles/arrows/image/down.png"
+    },
+    {
+      "id": "image:right",
+      "data": "minecolonies:styles/arrows/image/right.png"
+    },
+    {
+      "id": "image:left",
+      "data": "minecolonies:styles/arrows/image/left.png"
+    }
+  ]
+}

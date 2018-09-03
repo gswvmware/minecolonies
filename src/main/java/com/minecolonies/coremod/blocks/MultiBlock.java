@@ -3,8 +3,10 @@ package com.minecolonies.coremod.blocks;
 import com.minecolonies.api.util.constant.Constants;
 import com.minecolonies.blockout.BlockOut;
 import com.minecolonies.blockout.binding.dependency.DependencyObjectHelper;
+import com.minecolonies.blockout.binding.property.PropertyCreationHelper;
 import com.minecolonies.blockout.connector.core.inventory.builder.IItemHandlerManagerBuilder;
 import com.minecolonies.blockout.element.root.RootGuiElement;
+import com.minecolonies.blockout.element.simple.TextField;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.creativetab.ModCreativeTabs;
 import com.minecolonies.coremod.tileentities.TileEntityMultiBlock;
@@ -94,6 +96,20 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                iBlockOutGuiConstructionDataBuilder
                                                  .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
                                                  .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity))
+                                                 .done()
+                                  .withControl("speed_input", TextField.TextFieldConstructionDataBuilder.class)
+                                                 .withDependentContents(DependencyObjectHelper.createFromProperty(
+                                                   PropertyCreationHelper.createFromNonOptional(
+                                                     (Object context) -> String.valueOf (((TileEntityMultiBlock) context).getSpeed()),
+                                                     (Object context, String input) -> ((TileEntityMultiBlock) context).setSpeed(Integer.parseInt(input))
+                                                   ), "1"))
+                                                 .done()
+                                  .withControl("range_input", TextField.TextFieldConstructionDataBuilder.class)
+                                                 .withDependentContents(DependencyObjectHelper.createFromProperty(
+                                                   PropertyCreationHelper.createFromNonOptional(
+                                                     (Object context) -> String.valueOf (((TileEntityMultiBlock) context).getRange()),
+                                                     (Object context, String input) -> ((TileEntityMultiBlock) context).setRange(Integer.parseInt(input))
+                                                   ), "3"))
                                                  .done()
                                   )
 

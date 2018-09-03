@@ -93,7 +93,7 @@ public class TileEntityMultiBlock extends TileEntity implements ITickable
     private int ticksPassed = 0;
 
     /**
-     * Speed of the multiblock, max 3, min 1.
+     * Speed of the arrows, max 3, min 1.
      */
     private int speed = 2;
 
@@ -326,61 +326,6 @@ public class TileEntityMultiBlock extends TileEntity implements ITickable
     public void setSpeed(final int speed)
     {
         this.speed = Ints.constrainToRange(speed, MIN_SPEED, MAX_SPEED);
-    }
-
-    /**
-     * Get the range of blocks it should push.
-     *
-     * @return the range.
-     */
-    public String getRangeString()
-    {
-        return Integer.toString(range);
-    }
-
-    /**
-     * Get the speed of the block.
-     * @return the speed (min 1 max 3).
-     */
-    public String getSpeedString()
-    {
-        return Integer.toString(speed);
-    }
-
-    /**
-     * Set the range it should push.
-     *
-     * @param rangeString the range.
-     */
-    public void setRangeString(final String rangeString)
-    {
-        try
-        {
-            final int range = Integer.valueOf(rangeString);
-            this.range = Math.min(range, MAX_RANGE);
-            this.progress = range;
-        }
-        catch (final NumberFormatException ex)
-        {
-            Log.getLogger().info("Wrong input for range");
-        }
-    }
-
-    /**
-     * Setter for speed.
-     * @param speedString the speed to set.
-     */
-    public void setSpeedString(final String speedString)
-    {
-        try
-        {
-            final int speed = Integer.valueOf(speedString);
-            this.speed = Ints.constrainToRange(speed, MIN_SPEED, MAX_SPEED);
-        }
-        catch (final NumberFormatException ex)
-        {
-            Log.getLogger().info("Wrong input for speed");
-        }
     }
 
     @Override

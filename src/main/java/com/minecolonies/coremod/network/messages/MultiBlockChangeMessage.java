@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Message class which handles updating the minecolonies multiblock.
+ * Message class which handles updating the minecolonies arrows.
  */
 public class MultiBlockChangeMessage extends AbstractMessage<MultiBlockChangeMessage, IMessage>
 {

@@ -42,7 +42,7 @@ public class WindowMultiBlock extends AbstractWindowSkeleton
     private static final String RED_POS = "_red";
 
     /**
-     * Position of the multiblock.
+     * Position of the arrows.
      */
     private final BlockPos pos;
 

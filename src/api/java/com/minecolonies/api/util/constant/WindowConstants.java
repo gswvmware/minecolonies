@@ -605,7 +605,7 @@ public final class WindowConstants
     public static final String INPUT_RANGE_NAME = "range";
 
     /**
-     * Resource suffix of the multiblock GUI.
+     * Resource suffix of the arrows GUI.
      */
     public static final String MULTI_BLOCK_RESOURCE_SUFFIX = ":gui/windowmultiblock.xml";
 
