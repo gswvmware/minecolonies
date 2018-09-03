@@ -32,6 +32,14 @@
     {
       "id": "image:left",
       "data": "minecolonies:styles/arrows/image/left.png"
+    },
+    {
+      "id": "image:minus",
+      "data": "minecolonies:styles/arrows/image/minus.png"
+    },
+    {
+      "id": "image:plus",
+      "data": "minecolonies:styles/arrows/image/plus.png"
     }
   ]
 }
