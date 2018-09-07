@@ -110,6 +110,11 @@ public final class WindowConstants
     public static final String BUTTON_DOWN = "minus";
 
     /**
+     * Id of the up button in the GUI.
+     */
+    public static final String ON_CLICKED_EVENT = "onClicked";
+
+    /**
      * The id of the delete button in the GUI.
      */
     public static final String BUTTON_DELETE = "delete";

@@ -89,24 +89,6 @@
           "defaultBackgroundImage": "image:minus",
           "disabledBackgroundImage": "image:minus",
           "clickedBackgroundImage": "image:minus"
-        },
-        {
-          "id": "confirm_button",
-          "type": "blockout:button",
-          "size": "32, 32",
-          "margin": "-10, 96",
-          "defaultBackgroundImage": "image:confirm",
-          "disabledBackgroundImage": "image:confirm",
-          "clickedBackgroundImage": "image:confirm"
-        },
-        {
-          "id": "cancel_button",
-          "type": "blockout:button",
-          "size": "32, 32",
-          "margin": "74, 96",
-          "defaultBackgroundImage": "image:cancel",
-          "disabledBackgroundImage": "image:cancel",
-          "clickedBackgroundImage": "image:cancel"
         }
       ]
     }

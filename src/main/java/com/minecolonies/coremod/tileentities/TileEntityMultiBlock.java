@@ -1,7 +1,8 @@
 package com.minecolonies.coremod.tileentities;
 
 import com.google.common.primitives.Ints;
-import com.minecolonies.blockout.Log;
+import com.minecolonies.blockout.element.simple.Button;
+import com.minecolonies.blockout.util.mouse.MouseButton;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -23,6 +24,9 @@ import java.util.List;
 import static com.minecolonies.api.util.constant.Constants.HALF_BLOCK;
 import static com.minecolonies.api.util.constant.Constants.TICKS_SECOND;
 import static com.minecolonies.api.util.constant.NbtTagConstants.*;
+import static com.minecolonies.api.util.constant.WindowConstants.*;
+import static com.minecolonies.api.util.constant.WindowConstants.BUTTON_LEFT;
+import static com.minecolonies.api.util.constant.WindowConstants.BUTTON_RIGHT;
 import static com.minecolonies.coremod.util.SoundUtils.PITCH;
 import static com.minecolonies.coremod.util.SoundUtils.VOLUME;
 import static net.minecraft.util.EnumFacing.*;
@@ -32,6 +36,21 @@ import static net.minecraft.util.EnumFacing.*;
  */
 public class TileEntityMultiBlock extends TileEntity implements ITickable
 {
+    /**
+     * Green String for selected left click.
+     */
+    private static final String GREEN_POS = "_green";
+
+    /**
+     * Red String for selected right click.
+     */
+    private static final String RED_POS = "_red";
+
+    /**
+     * The image res.
+     */
+    private static final String IMAGE_RES = "image:";
+
     /**
      * Max block range.
      */
@@ -239,6 +258,7 @@ public class TileEntityMultiBlock extends TileEntity implements ITickable
         super.mirror(mirrorIn);
     }
 
+
     /**
      * Check if the redstone is on.
      *
@@ -390,5 +410,101 @@ public class TileEntityMultiBlock extends TileEntity implements ITickable
     {
         final NBTTagCompound compound = packet.getNbtCompound();
         this.readFromNBT(compound);
+    }
+
+    /**
+     * On direction button clicked.
+     * @param button the button in the GUI
+     * @param mouseButton the mouse button.
+     */
+    public void directionButtonClicked(final Button button, final MouseButton mouseButton)
+    {
+        switch (button.getId())
+        {
+            case BUTTON_UP:
+                setNewFacing(UP, mouseButton, button);
+                break;
+            case BUTTON_DOWN:
+                setNewFacing(DOWN, mouseButton, button);
+                break;
+            case BUTTON_FORWARD:
+                setNewFacing(NORTH, mouseButton, button);
+                break;
+            case BUTTON_BACKWARD:
+                setNewFacing(SOUTH, mouseButton, button);
+                break;
+            case BUTTON_RIGHT:
+                setNewFacing(EAST, mouseButton, button);
+                break;
+            case BUTTON_LEFT:
+                setNewFacing(WEST, mouseButton, button);
+                break;
+            default:
+                setNewFacing(UP, mouseButton, button);
+                break;
+        }
+    }
+
+    /**
+     * Se the facing depending on the mouse button.
+     * @param facing the facing.
+     * @param mouseButton the mouse button.
+     * @param button the clicked button.
+     */
+    private void setNewFacing(final EnumFacing facing, final MouseButton mouseButton, final Button button)
+    {
+        if (mouseButton == MouseButton.LEFT)
+        {
+            direction = facing;
+        }
+        else
+        {
+            output = facing;
+        }
+    }
+
+    /**
+     * Get the resource location for the button.
+     * @param buttonId the id to check.
+     * @return the location.
+     */
+    public ResourceLocation getButtonResource(final String buttonId)
+    {
+        switch (buttonId)
+        {
+            case BUTTON_UP:
+                return resourceForDirection(UP, BUTTON_UP);
+            case BUTTON_DOWN:
+                return resourceForDirection(DOWN, BUTTON_DOWN);
+            case BUTTON_FORWARD:
+                return resourceForDirection(NORTH, BUTTON_FORWARD);
+            case BUTTON_BACKWARD:
+                return resourceForDirection(SOUTH, BUTTON_BACKWARD);
+            case BUTTON_RIGHT:
+                return resourceForDirection(EAST, BUTTON_RIGHT);
+            case BUTTON_LEFT:
+                return resourceForDirection(WEST, BUTTON_LEFT);
+            default:
+                return resourceForDirection(UP, BUTTON_UP);
+        }
+    }
+
+    /**
+     * Get resource location for facing and buttonId.
+     * @param facing the facing.
+     * @param buttonId the buttonId.
+     * @return the location.
+     */
+    private ResourceLocation resourceForDirection(final EnumFacing facing, final String buttonId)
+    {
+        if (direction == facing)
+        {
+            return new ResourceLocation( IMAGE_RES + buttonId + GREEN_POS);
+        }
+        else if (output == facing)
+        {
+            return new ResourceLocation(IMAGE_RES + buttonId + RED_POS);
+        }
+        return new ResourceLocation(IMAGE_RES + buttonId);
     }
 }

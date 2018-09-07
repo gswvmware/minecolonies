@@ -4,10 +4,9 @@ import com.minecolonies.api.util.constant.Constants;
 import com.minecolonies.blockout.BlockOut;
 import com.minecolonies.blockout.binding.dependency.DependencyObjectHelper;
 import com.minecolonies.blockout.binding.property.PropertyCreationHelper;
-import com.minecolonies.blockout.connector.core.inventory.builder.IItemHandlerManagerBuilder;
 import com.minecolonies.blockout.element.root.RootGuiElement;
+import com.minecolonies.blockout.element.simple.Button;
 import com.minecolonies.blockout.element.simple.TextField;
-import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.creativetab.ModCreativeTabs;
 import com.minecolonies.coremod.tileentities.TileEntityMultiBlock;
 import net.minecraft.block.Block;
@@ -21,10 +20,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import static com.minecolonies.api.util.constant.Suppression.DEPRECATION;
+import static com.minecolonies.api.util.constant.WindowConstants.*;
 
 /**
  * This Class is about the MultiBlock which takes care of pushing others around (In a non mean way).
@@ -96,38 +98,145 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                   .withDefaultItemHandlerManager()
                                   .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/multiblock.json"))
                                   .usingData(iBlockOutGuiConstructionDataBuilder ->
-                                               iBlockOutGuiConstructionDataBuilder
-                                                 .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class, rootGuiConstructionDataBuilder -> rootGuiConstructionDataBuilder.withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity)))
-                                  .withControl("speed_input", TextField.TextFieldConstructionDataBuilder.class, textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
-                                                 .withDependentContents(DependencyObjectHelper.createFromProperty(
-                                                   PropertyCreationHelper.createFromNonOptional(
-                                                     (Object context) -> speedCache[0],
-                                                     (Object context, String input) -> {
-                                                         speedCache[0] = input;
-                                                         try {
-                                                             ((TileEntityMultiBlock) context).setSpeed(Integer.parseInt(input));
-                                                         }
-                                                         catch (final Exception ignored)
-                                                         {
-                                                             //Thrown when something other then a number is inserted. disregard.
-                                                         }
-                                                     }
-                                                   ), "1")))
-                                  .withControl("range_input", TextField.TextFieldConstructionDataBuilder.class , textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
-                                                 .withDependentContents(DependencyObjectHelper.createFromProperty(
-                                                   PropertyCreationHelper.createFromNonOptional(
-                                                     (Object context) -> rangeCache[0],
-                                                     (Object context, String input) -> {
-                                                         rangeCache[0] = input;
-                                                         try {
-                                                             ((TileEntityMultiBlock) context).setRange(Integer.parseInt(input));
-                                                         }
-                                                         catch (final Exception ignored)
-                                                         {
-                                                             //Thrown when something other then a number is inserted. disregard.
-                                                         }
-                                                     }
-                                                   ), "3")))
+                                    {
+                                        iBlockOutGuiConstructionDataBuilder
+                                          .withControl("root",
+                                            RootGuiElement.RootGuiConstructionDataBuilder.class,
+                                            rootGuiConstructionDataBuilder -> rootGuiConstructionDataBuilder.withDependentDataContext(DependencyObjectHelper.createFromValue(
+                                              tileEntity)))
+                                          .withControl("speed_input",
+                                            TextField.TextFieldConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withDependentContents(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      (Object context) -> speedCache[0],
+                                                                                      (Object context, String input) -> {
+                                                                                          speedCache[0] = input;
+                                                                                          try
+                                                                                          {
+                                                                                              ((TileEntityMultiBlock) context).setSpeed(Integer.parseInt(input));
+                                                                                          }
+                                                                                          catch (final Exception ignored)
+                                                                                          {
+                                                                                              //Thrown when something other then a number is inserted. disregard.
+                                                                                          }
+                                                                                      }
+                                                                                    ), "1")))
+                                          .withControl("range_input",
+                                            TextField.TextFieldConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withDependentContents(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      (Object context) -> rangeCache[0],
+                                                                                      (Object context, String input) -> {
+                                                                                          rangeCache[0] = input;
+                                                                                          try
+                                                                                          {
+                                                                                              ((TileEntityMultiBlock) context).setRange(Integer.parseInt(input));
+                                                                                          }
+                                                                                          catch (final Exception ignored)
+                                                                                          {
+                                                                                              //Thrown when something other then a number is inserted. disregard.
+                                                                                          }
+                                                                                      }
+                                                                                    ), "3")))
+                                          .withControl(BUTTON_UP,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                      {
+                                                                                          ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                            buttonClickedEventArgs.getButton());
+                                                                                      }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:plus")))
+                                          )
+                                          .withControl(BUTTON_DOWN,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                        {
+                                                                                            ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                              buttonClickedEventArgs.getButton());
+                                                                                        }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:minus")))
+                                          )
+                                          .withControl(BUTTON_RIGHT,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                        {
+                                                                                            ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                              buttonClickedEventArgs.getButton());
+                                                                                        }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:right")))
+                                          )
+                                          .withControl(BUTTON_LEFT,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                        {
+                                                                                            ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                              buttonClickedEventArgs.getButton());
+                                                                                        }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:left")))
+                                          )
+                                          .withControl(BUTTON_FORWARD,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                        {
+                                                                                            ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                              buttonClickedEventArgs.getButton());
+                                                                                        }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:up")))
+                                          )
+                                          .withControl(BUTTON_BACKWARD,
+                                            Button.ButtonConstructionDataBuilder.class,
+                                            textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
+                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                    (button, buttonClickedEventArgs) -> {
+                                                                                        if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
+                                                                                        {
+                                                                                            ((TileEntityMultiBlock) tileEntity).directionButtonClicked(button,
+                                                                                              buttonClickedEventArgs.getButton());
+                                                                                        }
+                                                                                    })
+                                                                                  .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
+                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                    ), new ResourceLocation("image:down")))
+                                          );
+                                    }
                                   )
 
             );
@@ -156,7 +265,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
     }
 
     @Override
-    public TileEntity createTileEntity(final World world, final IBlockState state)
+    public TileEntity createTileEntity(@NotNull final World world, @NotNull final IBlockState state)
     {
         return new TileEntityMultiBlock();
     }
