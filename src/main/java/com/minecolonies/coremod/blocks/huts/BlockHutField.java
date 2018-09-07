@@ -202,9 +202,8 @@ public class BlockHutField extends AbstractBlockMinecoloniesContainer<BlockHutFi
                                       .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/scarecrow.json"))
                                       .usingData(iBlockOutGuiConstructionDataBuilder ->
                                                    iBlockOutGuiConstructionDataBuilder
-                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
-                                                     .withDependentDataContext(DependencyObjectHelper.createFromValue(scarecrowTileEntity))
-                                                     .done()
+                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class,
+                                                       rootGuiConstructionDataBuilder -> rootGuiConstructionDataBuilder.withDependentDataContext(DependencyObjectHelper.createFromValue(scarecrowTileEntity)))
                                       )
 
                 );

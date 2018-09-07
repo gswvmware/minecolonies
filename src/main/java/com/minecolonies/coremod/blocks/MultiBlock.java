@@ -85,6 +85,9 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
         final TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (!worldIn.isRemote && tileEntity instanceof TileEntityMultiBlock)
         {
+            final String[] speedCache = {String.valueOf(((TileEntityMultiBlock) tileEntity).getSpeed())};
+            final String[] rangeCache = {String.valueOf(((TileEntityMultiBlock) tileEntity).getRange())};
+
             BlockOut.getBlockOut().getProxy().getGuiController().openUI(
               playerIn,
               iGuiKeyBuilder -> iGuiKeyBuilder
@@ -94,23 +97,37 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                   .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/multiblock.json"))
                                   .usingData(iBlockOutGuiConstructionDataBuilder ->
                                                iBlockOutGuiConstructionDataBuilder
-                                                 .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
-                                                 .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity))
-                                                 .done()
-                                  .withControl("speed_input", TextField.TextFieldConstructionDataBuilder.class)
+                                                 .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class, rootGuiConstructionDataBuilder -> rootGuiConstructionDataBuilder.withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity)))
+                                  .withControl("speed_input", TextField.TextFieldConstructionDataBuilder.class, textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
                                                  .withDependentContents(DependencyObjectHelper.createFromProperty(
                                                    PropertyCreationHelper.createFromNonOptional(
-                                                     (Object context) -> String.valueOf (((TileEntityMultiBlock) context).getSpeed()),
-                                                     (Object context, String input) -> ((TileEntityMultiBlock) context).setSpeed(Integer.parseInt(input))
-                                                   ), "1"))
-                                                 .done()
-                                  .withControl("range_input", TextField.TextFieldConstructionDataBuilder.class)
+                                                     (Object context) -> speedCache[0],
+                                                     (Object context, String input) -> {
+                                                         speedCache[0] = input;
+                                                         try {
+                                                             ((TileEntityMultiBlock) context).setSpeed(Integer.parseInt(input));
+                                                         }
+                                                         catch (final Exception ignored)
+                                                         {
+                                                             //Thrown when something other then a number is inserted. disregard.
+                                                         }
+                                                     }
+                                                   ), "1")))
+                                  .withControl("range_input", TextField.TextFieldConstructionDataBuilder.class , textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
                                                  .withDependentContents(DependencyObjectHelper.createFromProperty(
                                                    PropertyCreationHelper.createFromNonOptional(
-                                                     (Object context) -> String.valueOf (((TileEntityMultiBlock) context).getRange()),
-                                                     (Object context, String input) -> ((TileEntityMultiBlock) context).setRange(Integer.parseInt(input))
-                                                   ), "3"))
-                                                 .done()
+                                                     (Object context) -> rangeCache[0],
+                                                     (Object context, String input) -> {
+                                                         rangeCache[0] = input;
+                                                         try {
+                                                             ((TileEntityMultiBlock) context).setRange(Integer.parseInt(input));
+                                                         }
+                                                         catch (final Exception ignored)
+                                                         {
+                                                             //Thrown when something other then a number is inserted. disregard.
+                                                         }
+                                                     }
+                                                   ), "3")))
                                   )
 
             );

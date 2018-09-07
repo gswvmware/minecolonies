@@ -326,9 +326,8 @@ public class BlockMinecoloniesRack extends AbstractBlockMinecolonies<BlockMineco
                                       .ofFile(new ResourceLocation("minecolonies:gui/blockout_new/"+ name +".json"))
                                       .usingData(iBlockOutGuiConstructionDataBuilder ->
                                                    iBlockOutGuiConstructionDataBuilder
-                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class)
-                                                     .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity))
-                                                     .done()
+                                                     .withControl("root", RootGuiElement.RootGuiConstructionDataBuilder.class, rootGuiConstructionDataBuilder -> rootGuiConstructionDataBuilder
+                                                     .withDependentDataContext(DependencyObjectHelper.createFromValue(tileEntity)))
                                       )
 
                 );
