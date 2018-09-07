@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.minecolonies.api.util.constant.TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_HOME_ASSIGN;
 import static com.minecolonies.api.util.constant.TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_WORKERHUTS_LEVEL_0;
+import static com.minecolonies.api.util.constant.WindowConstants.LABEL_BUILDING_NAME;
 
 /**
  * Window for the home building.
@@ -30,7 +31,10 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
      * Id of the hire/fire button in the GUI.
      */
     private static final String BUTTON_REMOVE = "remove";
-
+    /**
+     * Id of the place where to name a citizen
+     */
+    private static final String ROW_NAME = "name";
     /**
      * Suffix describing the window xml.
      */
@@ -48,6 +52,10 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
      * The list of citizen assigned to this hut.
      */
     private ScrollingList citizen;
+    /**
+     * The label where the name of the town will be displayed
+     */
+    private final Label title;
 
     /**
      * Creates the Window object.
@@ -60,6 +68,8 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
 
         super.registerButton(BUTTON_ASSIGN, this::assignClicked);
         super.registerButton(BUTTON_REMOVE, this::removeClicked);
+        title = findPaneOfTypeByID(LABEL_BUILDING_NAME, Label.class);
+        title.setLabelText("*Name of the house*");
         this.home = building;
     }
 
@@ -83,7 +93,7 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
                 final CitizenDataView citizenDataView = home.getColony().getCitizen((home.getResidents().get(index)));
                 if (citizenDataView != null)
                 {
-                    rowPane.findPaneOfTypeByID("name", Label.class).setLabelText(citizenDataView.getName());
+                    rowPane.findPaneOfTypeByID(ROW_NAME, Label.class).setLabelText(citizenDataView.getName());
                     rowPane.findPaneOfTypeByID(BUTTON_REMOVE, Button.class).setEnabled(isManualHousing);
                 }
             }
