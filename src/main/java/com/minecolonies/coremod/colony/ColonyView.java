@@ -11,6 +11,7 @@ import com.minecolonies.api.util.BlockPosUtil;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.colony.buildings.registry.BuildingRegistry;
 import com.minecolonies.coremod.colony.buildings.views.AbstractBuildingView;
+import com.minecolonies.coremod.colony.buildings.workerbuildings.BuildingHome;
 import com.minecolonies.coremod.colony.buildings.workerbuildings.BuildingTownHall;
 import com.minecolonies.coremod.colony.permissions.PermissionsView;
 import com.minecolonies.coremod.colony.requestsystem.management.manager.StandardRequestManager;
@@ -366,6 +367,17 @@ public final class ColonyView implements IColony
     public AbstractBuildingView getBuilding(final BlockPos buildingId)
     {
         return buildings.get(buildingId);
+    }
+
+    /**
+     * Get only the houses from a colonty
+     * @return LinkedList with every building view
+     */
+    public List<AbstractBuildingView> getHousings()
+    {
+        Collection<AbstractBuildingView> buildings = this.buildings.values();
+        buildings.removeIf(abstractBuildingView -> !abstractBuildingView.isBuilding() || abstractBuildingView instanceof BuildingHome.View);
+        return new LinkedList<>(buildings);
     }
 
     /**

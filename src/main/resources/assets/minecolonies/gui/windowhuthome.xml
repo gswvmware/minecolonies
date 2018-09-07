@@ -14,6 +14,11 @@
                 </box>
             </list>
         </view>
+        <view id="pageName">
+            <layout source="minecolonies:gui/layouthuts/layouthutpageactions.xml"/>
+            <input id="newName" size="116 15" pos="37 32" />
+            <button id="rename" size="116 15" pos="37 47" label="$(com.minecolonies.coremod.gui.workerHuts.rename)"/>
+        </view>
     </switch>
     <buttonimage id="prevPage" size="18 10" pos="13 13" source="minecolonies:textures/gui/builderhut/turn_page_left.png"/>
     <buttonimage id="nextPage" size="18 10" pos="159 13" source="minecolonies:textures/gui/builderhut/turn_page_right.png"/>

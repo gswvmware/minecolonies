@@ -247,6 +247,7 @@ com.minecolonies.coremod.gui.workerHuts.level0=Please construct the hut to hire 
 com.minecolonies.coremod.job.guard.needWeapon=a weapon!
 com.minecolonies.coremod.gui.workerHuts.guardActions=Guard-actions:
 com.minecolonies.coremod.gui.workerHuts.assign=Assign the guard to the job:
+com.minecolonies.coremod.gui.workerHuts.rename=Rename
 com.minecolonies.coremod.gui.workerHuts.patrol=Find patrol target:
 com.minecolonies.coremod.gui.workerHuts.retrieve=Try to retrieve on low health:
 com.minecolonies.coremod.gui.workerHuts.knight=Knight

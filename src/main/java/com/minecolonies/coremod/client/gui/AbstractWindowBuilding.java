@@ -89,12 +89,6 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
         {
             final AbstractBuildingView buildingView = building.getColony().getBuilding(building.getID());
 
-            if (buttonPrevPage != null)
-            {
-                buttonPrevPage.disable();
-                buttonPrevPage.hide();
-            }
-
             if (title != null && (title.getLabelText() == null || title.getLabelText().equals("")))
             {
                 title.setLabelText(LanguageHandler.format(getBuildingName()) + " " + buildingView.getBuildingLevel());

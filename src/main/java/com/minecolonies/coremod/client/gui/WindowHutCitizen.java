@@ -5,6 +5,7 @@ import com.minecolonies.api.util.constant.Constants;
 import com.minecolonies.blockout.Pane;
 import com.minecolonies.blockout.controls.Button;
 import com.minecolonies.blockout.controls.Label;
+import com.minecolonies.blockout.controls.TextFieldVanilla;
 import com.minecolonies.blockout.views.ScrollingList;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.colony.CitizenDataView;
@@ -32,6 +33,14 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
      */
     private static final String BUTTON_REMOVE = "remove";
     /**
+     * The id of the button rename
+     */
+    private static final String BUTTON_RENAME = "rename";
+    /**
+     * The id of the field containing the new name
+     */
+    private static final String INPUT_NAME = "newName";
+    /**
      * Id of the place where to name a citizen
      */
     private static final String ROW_NAME = "name";
@@ -39,7 +48,6 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
      * Suffix describing the window xml.
      */
     private static final String HOME_BUILDING_RESOURCE_SUFFIX = ":gui/windowHutHome.xml";
-
     /**
      * Id to identify the list of the citizen in the view.
      */
@@ -65,11 +73,10 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
     public WindowHutCitizen(final BuildingHome.View building)
     {
         super(building, Constants.MOD_ID + HOME_BUILDING_RESOURCE_SUFFIX);
-
+        super.registerButton(BUTTON_RENAME, this::rename);
         super.registerButton(BUTTON_ASSIGN, this::assignClicked);
         super.registerButton(BUTTON_REMOVE, this::removeClicked);
         title = findPaneOfTypeByID(LABEL_BUILDING_NAME, Label.class);
-        title.setLabelText("*Name of the house*");
         this.home = building;
     }
 
@@ -78,6 +85,7 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
     {
         super.onOpened();
         final boolean isManualHousing = building.getColony().isManualHousing();
+        title.setLabelText(building.getHouseName());
         citizen = findPaneOfTypeByID(LIST_CITIZEN, ScrollingList.class);
         citizen.setDataProvider(new ScrollingList.DataProvider()
         {
@@ -164,5 +172,15 @@ public class WindowHutCitizen extends AbstractWindowBuilding<BuildingHome.View>
     public String getBuildingName()
     {
         return "com.minecolonies.coremod.gui.workerHuts.homeHut";
+    }
+
+    /**
+     * Function used to rename a player
+     */
+    private void rename()
+    {
+        TextFieldVanilla input = findPaneOfTypeByID(INPUT_NAME, TextFieldVanilla.class);
+        building.setHouseName(input.getText());
+        title.setLabelText(building.getHouseName());
     }
 }

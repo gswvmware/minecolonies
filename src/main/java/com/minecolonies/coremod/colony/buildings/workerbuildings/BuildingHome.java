@@ -303,6 +303,9 @@ public class BuildingHome extends AbstractBuilding
         @NotNull
         private final List<Integer> residents = new ArrayList<>();
 
+        @NotNull
+        private String houseName = "";
+
         /**
          * Creates an instance of the citizen hut window.
          *
@@ -343,6 +346,27 @@ public class BuildingHome extends AbstractBuilding
         public void addResident(final int id)
         {
             residents.add(id);
+        }
+
+        /**
+         * Get the name of the house
+         *
+         * @return Name of the house
+         */
+        @NotNull
+        public String getHouseName()
+        {
+            return houseName;
+        }
+
+        /**
+         * Set the name of the house
+         *
+         * @param name The new name that should be assigned
+         */
+        public void setHouseName(@NotNull final String name)
+        {
+            houseName = name;
         }
 
         @NotNull
