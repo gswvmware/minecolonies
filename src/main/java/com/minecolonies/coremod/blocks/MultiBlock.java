@@ -107,8 +107,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl("speed_input",
                                             TextField.TextFieldConstructionDataBuilder.class,
                                             textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
-                                                                                  .withDependentContents(DependencyObjectHelper.createFromProperty(
-                                                                                    PropertyCreationHelper.createFromNonOptional(
+                                                                                  .withDependentContents(DependencyObjectHelper.createFromSetterAndGetter(
                                                                                       (Object context) -> speedCache[0],
                                                                                       (Object context, String input) -> {
                                                                                           speedCache[0] = input;
@@ -121,7 +120,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                               //Thrown when something other then a number is inserted. disregard.
                                                                                           }
                                                                                       }
-                                                                                    ), "1")))
+                                                                                    , "1")))
                                           .withControl("range_input",
                                             TextField.TextFieldConstructionDataBuilder.class,
                                             textFieldConstructionDataBuilder -> textFieldConstructionDataBuilder
@@ -143,7 +142,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_UP,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                       {
@@ -159,7 +158,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_DOWN,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                         {
@@ -175,7 +174,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_RIGHT,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                         {
@@ -191,7 +190,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_LEFT,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                         {
@@ -207,7 +206,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_FORWARD,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                         {
@@ -223,7 +222,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                           .withControl(BUTTON_BACKWARD,
                                             Button.ButtonConstructionDataBuilder.class,
                                             buttonConstructionDataBuilder -> buttonConstructionDataBuilder
-                                                                                  .withEventHandler(ON_CLICKED_EVENT, Button.ButtonClickedEventArgs.class,
+                                                                                  .withClickedEventHandler(
                                                                                     (button, buttonClickedEventArgs) -> {
                                                                                         if (buttonClickedEventArgs != null && buttonClickedEventArgs.isStart())
                                                                                         {

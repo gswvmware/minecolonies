@@ -37,7 +37,7 @@
           "margin": "54,45"
         },
         {
-          "id": "up_button",
+          "id": "up",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "32,-5",
@@ -46,7 +46,7 @@
           "clickedBackgroundImage": "image:up"
         },
         {
-          "id": "down_button",
+          "id": "down",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "32, 69",
@@ -55,7 +55,7 @@
           "clickedBackgroundImage": "image:down"
         },
         {
-          "id": "right_button",
+          "id": "right",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "74, 32",
@@ -64,7 +64,7 @@
           "clickedBackgroundImage": "image:right"
         },
         {
-          "id": "left_button",
+          "id": "left",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "-15, 32",
@@ -73,7 +73,7 @@
           "clickedBackgroundImage": "image:left"
         },
         {
-          "id": "plus_button",
+          "id": "plus",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "74, 64",
@@ -82,7 +82,7 @@
           "clickedBackgroundImage": "image:plus"
         },
         {
-          "id": "minus_button",
+          "id": "minus",
           "type": "blockout:button",
           "size": "32, 32",
           "margin": "-10, 64",
