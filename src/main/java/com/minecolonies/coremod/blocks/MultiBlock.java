@@ -169,7 +169,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                     })
                                                                                   .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
                                                                                     PropertyCreationHelper.createFromNonOptional(
-                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_DOWN)), Optional.empty()
                                                                                     ), new ResourceLocation("image:minus")))
                                           )
                                           .withControl(BUTTON_RIGHT,
@@ -185,7 +185,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                     })
                                                                                   .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
                                                                                     PropertyCreationHelper.createFromNonOptional(
-                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_RIGHT)), Optional.empty()
                                                                                     ), new ResourceLocation("image:right")))
                                           )
                                           .withControl(BUTTON_LEFT,
@@ -201,7 +201,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                     })
                                                                                   .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
                                                                                     PropertyCreationHelper.createFromNonOptional(
-                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_LEFT)), Optional.empty()
                                                                                     ), new ResourceLocation("image:left")))
                                           )
                                           .withControl(BUTTON_FORWARD,
@@ -217,7 +217,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                     })
                                                                                   .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
                                                                                     PropertyCreationHelper.createFromNonOptional(
-                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_FORWARD)), Optional.empty()
                                                                                     ), new ResourceLocation("image:up")))
                                           )
                                           .withControl(BUTTON_BACKWARD,
@@ -233,7 +233,7 @@ public class MultiBlock extends AbstractBlockMinecolonies<MultiBlock>
                                                                                     })
                                                                                   .withNormalBackgroundImageResource(DependencyObjectHelper.createFromProperty(
                                                                                     PropertyCreationHelper.createFromNonOptional(
-                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_UP)), Optional.empty()
+                                                                                      Optional.of((context) -> ((TileEntityMultiBlock) tileEntity).getButtonResource(BUTTON_BACKWARD)), Optional.empty()
                                                                                     ), new ResourceLocation("image:down")))
                                           );
                                     }
