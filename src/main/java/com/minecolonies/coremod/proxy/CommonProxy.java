@@ -243,14 +243,6 @@ public class CommonProxy implements IProxy
     }
 
     @Override
-    public void openMultiBlockWindow(final BlockPos pos)
-    {
-        /*
-         * Intentionally left empty.
-         */
-    }
-
-    @Override
     public void openBuildToolWindow(final BlockPos pos, final String structureName, final int rotation, final WindowBuildTool.FreeMode mode)
     {
         /*
