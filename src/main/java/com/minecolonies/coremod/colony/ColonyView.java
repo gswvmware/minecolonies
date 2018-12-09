@@ -8,6 +8,7 @@ import com.minecolonies.api.colony.permissions.Rank;
 import com.minecolonies.api.colony.requestsystem.manager.IRequestManager;
 import com.minecolonies.api.colony.requestsystem.requester.IRequester;
 import com.minecolonies.api.util.BlockPosUtil;
+import com.minecolonies.blockout.Log;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.colony.buildings.registry.BuildingRegistry;
 import com.minecolonies.coremod.colony.buildings.views.AbstractBuildingView;
@@ -161,6 +162,7 @@ public final class ColonyView implements IColony
      */
     public static void serializeNetworkData(@NotNull final Colony colony, @NotNull final ByteBuf buf, final boolean isNewSubScription)
     {
+        Log.getLogger().warn("Creating colony view");
         //  General Attributes
         ByteBufUtils.writeUTF8String(buf, colony.getName());
         buf.writeInt(colony.getDimension());
@@ -199,6 +201,7 @@ public final class ColonyView implements IColony
 
         if (colony.getRequestManager() != null && (colony.getRequestManager().isDirty() || isNewSubScription))
         {
+            Log.getLogger().warn("Adding request data to it!");
             buf.writeBoolean(true);
             ByteBufUtils.writeTag(buf, colony.getRequestManager().serializeNBT());
         }
@@ -472,6 +475,7 @@ public final class ColonyView implements IColony
     @Nullable
     public IMessage handleColonyViewMessage(@NotNull final ByteBuf buf, @NotNull final World world, final boolean isNewSubscription)
     {
+        Log.getLogger().warn("Getting colony view message on client");
         this.world = world;
         //  General Attributes
         name = ByteBufUtils.readUTF8String(buf);
@@ -517,6 +521,7 @@ public final class ColonyView implements IColony
 
         if (buf.readBoolean())
         {
+            Log.getLogger().warn("Getting request manager message!");
             final NBTTagCompound compound = ByteBufUtils.readTag(buf);
             this.requestManager = new StandardRequestManager(this);
             this.requestManager.deserializeNBT(compound);

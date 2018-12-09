@@ -10,6 +10,7 @@ import com.minecolonies.api.util.InventoryUtils;
 import com.minecolonies.api.util.LanguageHandler;
 import com.minecolonies.api.util.constant.Constants;
 import com.minecolonies.blockout.Alignment;
+import com.minecolonies.blockout.Log;
 import com.minecolonies.blockout.Pane;
 import com.minecolonies.blockout.controls.*;
 import com.minecolonies.blockout.views.Box;
@@ -481,11 +482,12 @@ public class WindowCitizen extends AbstractWindowSkeleton
           (citizen.getWorkBuilding() != null) ? citizen.getWorkBuilding() : citizen.getHomeBuilding());
         if (colonyView == null)
         {
+            Log.getLogger().warn("Colony view is null at the citizen!!!!!!!");
             return ImmutableList.of();
         }
 
         final List<RequestWrapper> treeElements = new ArrayList<>();
-
+        Log.getLogger().warn("Requests: " + getOpenRequestsOfCitizen().size());
         getOpenRequestsOfCitizen().stream().forEach(r -> {
             constructTreeFromRequest(colonyView.getRequestManager(), r, treeElements, 0);
         });
