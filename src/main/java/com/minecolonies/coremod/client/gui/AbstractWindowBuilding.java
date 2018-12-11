@@ -42,6 +42,7 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
         registerButton(BUTTON_BUILD, this::buildClicked);
         registerButton(BUTTON_REPAIR, this::repairClicked);
         registerButton(BUTTON_INVENTORY, this::inventoryClicked);
+        registerButton(BUTTON_EDIT_NAME, this::editName);
         title = findPaneOfTypeByID(LABEL_BUILDING_NAME, Label.class);
         buttonBuild = findPaneOfTypeByID(BUTTON_BUILD, Button.class);
         buttonRepair = findPaneOfTypeByID(BUTTON_REPAIR, Button.class);
@@ -166,6 +167,11 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
         {
             buttonRepair.setLabel(LanguageHandler.format("com.minecolonies.coremod.gui.workerHuts.repair"));
         }
+    }
+
+    private void editName()
+    {
+
     }
 
     @Override

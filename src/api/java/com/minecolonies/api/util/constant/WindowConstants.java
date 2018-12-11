@@ -116,6 +116,12 @@ public final class WindowConstants
     public static final String BUTTON_DELETE = "delete";
 
     /**
+     * Edit button for the hut name.
+     */
+
+    public static final String BUTTON_EDIT_NAME = "editName";
+
+    /**
      * Id of the input bar to add players. in the GUI.
      */
     public static final String INPUT_ADDPLAYER_NAME = "addPlayerName";
