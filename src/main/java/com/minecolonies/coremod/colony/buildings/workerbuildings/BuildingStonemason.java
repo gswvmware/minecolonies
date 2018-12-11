@@ -106,5 +106,17 @@ public class BuildingStonemason extends AbstractBuildingWorker
         {
             return Skill.STRENGTH;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "tile.minecolonies.blockHutStonemason.name";
+        }
     }
 }

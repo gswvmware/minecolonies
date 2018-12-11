@@ -237,13 +237,6 @@ public class WindowHutGuardTower extends AbstractWindowWorkerBuilding<AbstractBu
         }
     }
 
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.GuardTower";
-    }
-
     /**
      * Re-sorts the WorkOrders list according to the priorities inside the list.
      */

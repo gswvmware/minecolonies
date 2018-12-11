@@ -167,5 +167,17 @@ public class BuildingCowboy extends AbstractBuildingWorker
             super.deserialize(buf);
             milkCows = buf.readBoolean();
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "com.minecolonies.coremod.gui.workerHuts.cowboyHut";
+        }
     }
 }

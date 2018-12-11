@@ -159,7 +159,7 @@ public abstract class AbstractWindowWorkerBuilding<B extends AbstractBuildingWor
      */
     private void hireClicked(@NotNull final Button button)
     {
-        if (building.getBuildingLevel() == 0 && !BUILDER_HUT_NAME.equals(getBuildingName()))
+        if (building.getBuildingLevel() == 0 && !BUILDER_HUT_NAME.equals(building.getBuildingDefaultName()))
         {
             LanguageHandler.sendPlayerMessage(Minecraft.getMinecraft().player, "com.minecolonies.coremod.gui.workerHuts.level0");
             return;

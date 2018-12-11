@@ -159,22 +159,6 @@ public class WindowHutBaker extends AbstractWindowWorkerBuilding<BuildingBaker.V
         });
     }
 
-    
-    
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return COM_MINECOLONIES_COREMOD_GUI_BAKER;
-    }
-
-    
-
     /**
      * Action performed when previous button is clicked.
      */

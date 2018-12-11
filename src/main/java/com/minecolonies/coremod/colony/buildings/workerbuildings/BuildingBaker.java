@@ -42,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 import static com.minecolonies.api.util.constant.Constants.TICKS_SECOND;
+import static com.minecolonies.api.util.constant.TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_BAKER;
 
 /**
  * Building for the baker.
@@ -621,6 +622,17 @@ public class BuildingBaker extends AbstractBuildingWorker
             {
                 recipesAllowed[i] = buf.readBoolean();
             }
+        }
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return COM_MINECOLONIES_COREMOD_GUI_BAKER;
         }
 
     }

@@ -27,11 +27,4 @@ public class WindowHutWorkerPlaceholder<B extends AbstractBuildingWorker.View> e
         super(building, Constants.MOD_ID + WORKER_PLACEHOLDER_RESOURCE_SUFFIX);
         this.name = name;
     }
-
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts." + name;
-    }
 }

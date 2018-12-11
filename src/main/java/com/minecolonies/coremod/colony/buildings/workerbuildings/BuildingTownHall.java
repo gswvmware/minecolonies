@@ -153,5 +153,16 @@ public class BuildingTownHall extends BuildingHome
         {
             return new LinkedList<>(permissionEvents);
         }
+
+        /**
+         * Returns the name of a building.
+         *
+         * @return Name of a building.
+         */
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return TOWN_HALL;
+        }
     }
 }

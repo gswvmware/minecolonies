@@ -183,5 +183,17 @@ public class BuildingDeliveryman extends AbstractBuildingWorker
         {
             return Skill.ENDURANCE;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "tile.minecolonies.blockHutDeliveryman.name";
+        }
     }
 }

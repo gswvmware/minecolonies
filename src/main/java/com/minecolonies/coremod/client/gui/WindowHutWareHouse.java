@@ -164,16 +164,4 @@ public class WindowHutWareHouse extends AbstractWindowBuilding<BuildingWareHouse
     {
         MineColonies.getNetwork().sendToServer(new SortWarehouseMessage(this.building));
     }
-
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.buildingWareHouse";
-    }
 }

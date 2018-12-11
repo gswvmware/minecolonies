@@ -84,13 +84,6 @@ public class WindowHutMiner extends AbstractWindowWorkerBuilding<BuildingMiner.V
         });
     }
 
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.minerHut";
-    }
-
     @Override
     public void onUpdate()
     {

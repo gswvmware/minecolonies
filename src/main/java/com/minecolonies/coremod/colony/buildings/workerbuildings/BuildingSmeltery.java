@@ -143,5 +143,17 @@ public class BuildingSmeltery extends AbstractBuildingFurnaceUser
         {
             return Skill.INTELLIGENCE;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "tile.minecolonies.blockhutsmeltery.name";
+        }
     }
 }

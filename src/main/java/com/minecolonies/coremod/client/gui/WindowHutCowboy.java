@@ -46,18 +46,6 @@ public class WindowHutCowboy extends AbstractWindowWorkerBuilding<BuildingCowboy
         }
     }
 
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.cowboyHut";
-    }
-
     private void milkCowsClicked()
     {
         if (buttonMilkCows.getLabel().equals(LanguageHandler.format(TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_COWBOY_COLLECT)))

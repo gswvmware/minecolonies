@@ -264,13 +264,6 @@ public class WindowHutFarmer extends AbstractWindowWorkerBuilding<BuildingFarmer
         });
     }
 
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return TILE_MINECOLONIES_BLOCK_HUT_FARMER_NAME;
-    }
-
     @Override
     public void onUpdate()
     {

@@ -1076,17 +1076,6 @@ public class WindowTownHall extends AbstractWindowBuilding<BuildingTownHall.View
         setPage("");
     }
 
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @Override
-    public String getBuildingName()
-    {
-        return townHall.getColony().getName();
-    }
-
     @Override
     public void onUpdate()
     {

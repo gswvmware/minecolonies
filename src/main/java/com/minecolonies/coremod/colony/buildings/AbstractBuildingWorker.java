@@ -670,5 +670,17 @@ public abstract class AbstractBuildingWorker extends AbstractBuilding
         {
             return this.canCraftComplexRecipes;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "Worker building";
+        }
     }
 }

@@ -363,5 +363,16 @@ public class BuildingHome extends AbstractBuilding
                 residents.add(buf.readInt());
             }
         }
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "com.minecolonies.coremod.gui.workerHuts.homeHut";
+        }
     }
 }

@@ -290,5 +290,17 @@ public class BuildingBarracks extends AbstractBuilding
         {
             return new WindowBarracksBuilding(this);
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "com.minecolonies.coremod.gui.workerHuts.buildBarracks";
+        }
     }
 }

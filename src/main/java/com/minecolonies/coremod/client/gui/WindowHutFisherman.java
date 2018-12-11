@@ -18,17 +18,5 @@ public class WindowHutFisherman extends AbstractWindowWorkerBuilding<BuildingFis
     {
         super(building, Constants.MOD_ID + ":gui/windowhutfisherman.xml");
     }
-
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.fisherman";
-    }
 }
 

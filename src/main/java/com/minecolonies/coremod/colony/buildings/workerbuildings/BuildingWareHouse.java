@@ -364,5 +364,17 @@ public class BuildingWareHouse extends AbstractBuilding
         {
             return allowUpgrade;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "com.minecolonies.coremod.gui.workerHuts.buildingWareHouse";
+        }
     }
 }

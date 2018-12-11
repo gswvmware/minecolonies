@@ -281,6 +281,18 @@ public class BuildingComposter extends AbstractBuildingWorker
                 listOfItems.add(new ItemStorage(ByteBufUtils.readItemStack(buf)));
             }
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "Composter Hut";
+        }
     }
 
 }

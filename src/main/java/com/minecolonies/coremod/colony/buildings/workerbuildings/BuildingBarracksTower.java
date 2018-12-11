@@ -168,5 +168,17 @@ public class BuildingBarracksTower extends AbstractBuildingGuards
         {
             return getWorkerId().size() >= getBuildingLevel();
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "tile.minecolonies.blockHutBarracksTower.name";
+        }
     }
 }

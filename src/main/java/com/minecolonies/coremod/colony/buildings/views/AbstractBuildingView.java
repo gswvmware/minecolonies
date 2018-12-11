@@ -1,5 +1,6 @@
 package com.minecolonies.coremod.colony.buildings.views;
 
+import com.minecolonies.api.util.LanguageHandler;
 import com.google.common.collect.ImmutableList;
 import com.google.common.reflect.TypeToken;
 import com.minecolonies.api.colony.requestsystem.StandardFactoryController;
@@ -43,6 +44,12 @@ import static com.minecolonies.api.util.constant.Suppression.*;
  */
 public abstract class AbstractBuildingView implements IRequester
 {
+
+    /**
+     * The name of the building.
+     */
+    private final String buildingName = LanguageHandler.format(getBuildingDefaultName())+" " + getBuildingLevel();
+
     /**
      * The colony of the building.
      */
@@ -116,6 +123,17 @@ public abstract class AbstractBuildingView implements IRequester
     {
         colony = c;
         location = new BlockPos(l);
+    }
+
+    /**
+     * Gets the name of this building.
+     *
+     * @return String, the name of the building.
+     */
+    @NotNull
+    public String getBuildingName()
+    {
+        return buildingName;
     }
 
     /**
@@ -441,4 +459,11 @@ public abstract class AbstractBuildingView implements IRequester
     {
         return buildingDmPrioState;
     }
+
+    /**
+     * Returns the default name of a building.
+     *
+     * @return Default name of a building.
+     */
+    public abstract String getBuildingDefaultName();
 }

@@ -168,12 +168,6 @@ public class WindowHutComposter extends AbstractWindowWorkerBuilding<BuildingCom
         });
     }
 
-    @Override
-    public String getBuildingName()
-    {
-        return "Composter Hut";
-    }
-
     /**
      * Action performed when previous button is clicked.
      */

@@ -122,5 +122,17 @@ public class BuildingCook extends AbstractBuildingFurnaceUser
         {
             return Skill.INTELLIGENCE;
         }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return "tile.minecolonies.blockHutCook.name";
+        }
     }
 }

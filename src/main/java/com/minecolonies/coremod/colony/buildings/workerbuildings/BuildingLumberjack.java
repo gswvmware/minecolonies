@@ -28,6 +28,7 @@ import java.util.function.Predicate;
 
 import static com.minecolonies.api.util.constant.ColonyConstants.NUM_ACHIEVEMENT_FIRST;
 import static com.minecolonies.api.util.constant.ToolLevelConstants.TOOL_LEVEL_WOOD_OR_GOLD;
+import static com.minecolonies.api.util.constant.TranslationConstants.COM_MINECOLONIES_COREMOD_GUI_LUMBERJACK;
 
 /**
  * The lumberjacks building.
@@ -371,6 +372,18 @@ public class BuildingLumberjack extends AbstractBuildingWorker
         public Window getWindow()
         {
             return new WindowHutLumberjack(this);
+        }
+
+        /**
+         * Returns the default name of a building.
+         *
+         * @return Default name of a building.
+         */
+        @NotNull
+        @Override
+        public String getBuildingDefaultName()
+        {
+            return COM_MINECOLONIES_COREMOD_GUI_LUMBERJACK;
         }
     }
 }

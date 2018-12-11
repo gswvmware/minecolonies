@@ -193,18 +193,6 @@ public class WindowHutBuilder extends AbstractWindowWorkerBuilding<BuildingBuild
         rowPane.findPaneOfTypeByID(RESOURCE_ICON, ItemIcon.class).setItem(stack);
     }
 
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.buildersHut";
-    }
-
     @Override
     public void onUpdate()
     {

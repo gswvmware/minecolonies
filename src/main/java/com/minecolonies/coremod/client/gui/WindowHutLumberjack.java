@@ -163,18 +163,6 @@ public class WindowHutLumberjack extends AbstractWindowWorkerBuilding<BuildingLu
         });
     }
 
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return COM_MINECOLONIES_COREMOD_GUI_LUMBERJACK;
-    }
-
     @Override
     public void onUpdate()
     {

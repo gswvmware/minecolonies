@@ -70,18 +70,6 @@ public class WindowBarracksBuilding extends AbstractWindowBuilding<BuildingBarra
         positionsList = findPaneOfTypeByID(LIST_POSITIONS, ScrollingList.class);
     }
 
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    @NotNull
-    @Override
-    public String getBuildingName()
-    {
-        return "com.minecolonies.coremod.gui.workerHuts.buildBarracks";
-    }
-
     @Override
     public void onOpened()
     {

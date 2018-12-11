@@ -95,12 +95,12 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
                 if (switchView.getID().equals(GUI_LIST_BUTTON_SWITCH + PAGE_ACTIONS))
                 {
                     // Townhall does not need level in colony name
-                    title.setLabelText(getBuildingName());
+                    title.setLabelText(building.getColony().getName());
                     findPaneOfTypeByID(LEVEL_LABEL, Label.class).setLabelText(LanguageHandler.format(CMC_GUI_TOWNHALL_BUILDING_LEVEL) + ": " + buildingView.getBuildingLevel());
                 }
                 else
                 {
-                    title.setLabelText(LanguageHandler.format(getBuildingName()) + " " + buildingView.getBuildingLevel());
+                    title.setLabelText(building.getBuildingName());
                 }
             }
 
@@ -108,13 +108,6 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
             updateButtonRepair(buildingView);
         }
     }
-
-    /**
-     * Returns the name of a building.
-     *
-     * @return Name of a building.
-     */
-    public abstract String getBuildingName();
 
     /**
      * Update the state and label for the Build button.
