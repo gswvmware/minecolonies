@@ -18,6 +18,7 @@ import com.minecolonies.api.colony.requestsystem.token.IToken;
 import com.minecolonies.api.crafting.ItemStorage;
 import com.minecolonies.api.util.*;
 import com.minecolonies.api.util.constant.TypeConstants;
+import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.colony.*;
 import com.minecolonies.coremod.colony.buildings.registry.BuildingRegistry;
 import com.minecolonies.coremod.colony.buildings.workerbuildings.BuildingHome;
@@ -26,6 +27,7 @@ import com.minecolonies.coremod.colony.requestsystem.resolvers.BuildingRequestRe
 import com.minecolonies.coremod.colony.workorders.WorkOrderBuildBuilding;
 import com.minecolonies.coremod.entity.ai.citizen.builder.ConstructionTapeHelper;
 import com.minecolonies.coremod.entity.ai.citizen.deliveryman.EntityAIWorkDeliveryman;
+import com.minecolonies.coremod.network.messages.HutRenameMessage;
 import com.minecolonies.coremod.tileentities.TileEntityColonyBuilding;
 import com.minecolonies.coremod.util.ColonyUtils;
 import com.minecolonies.coremod.util.StructureWrapper;
@@ -87,6 +89,8 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
      * If the building has been built already.
      */
     private boolean isBuilt = false;
+
+    private String buildingName;
 
     /**
      * Constructor for a AbstractBuilding.
@@ -301,6 +305,11 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
             }
         }
     }
+    public void setBuildingName(String name)
+    {
+        buildingName = name;
+        MineColonies.getNetwork().sendToServer(new HutRenameMessage(getColony(), name, this));
+    }
 
     /**
      * Serializes to view.
@@ -313,6 +322,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
      */
     public void serializeToView(@NotNull final ByteBuf buf)
     {
+        ByteBufUtils.writeUTF8String(buf, buildingName);
         buf.writeInt(this.getClass().getName().hashCode());
         buf.writeInt(getBuildingLevel());
         buf.writeInt(getMaxBuildingLevel());

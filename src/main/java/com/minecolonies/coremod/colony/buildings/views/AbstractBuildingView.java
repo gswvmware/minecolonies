@@ -17,6 +17,7 @@ import com.minecolonies.blockout.views.Window;
 import com.minecolonies.coremod.MineColonies;
 import com.minecolonies.coremod.colony.CitizenDataView;
 import com.minecolonies.coremod.colony.ColonyView;
+import com.minecolonies.coremod.network.messages.HutRenameMessage;
 import com.minecolonies.coremod.network.messages.OpenInventoryMessage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,7 +49,7 @@ public abstract class AbstractBuildingView implements IRequester
     /**
      * The name of the building.
      */
-    private final String buildingName = LanguageHandler.format(getBuildingDefaultName())+" " + getBuildingLevel();
+    private String buildingName;
 
     /**
      * The colony of the building.
@@ -294,6 +295,7 @@ public abstract class AbstractBuildingView implements IRequester
      */
     public void deserialize(@NotNull final ByteBuf buf)
     {
+        buildingName = ByteBufUtils.readUTF8String(buf);
         buildingLevel = buf.readInt();
         buildingMaxLevel = buf.readInt();
         buildingDmPrio = buf.readInt();

@@ -171,7 +171,8 @@ public abstract class AbstractWindowBuilding<B extends AbstractBuildingView> ext
 
     private void editName()
     {
-
+        @NotNull final WindowHutNameEntry window = new WindowHutNameEntry(building);
+        window.open();
     }
 
     @Override
