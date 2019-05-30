@@ -437,10 +437,13 @@ public abstract class AbstractEntityAIHerder<J extends AbstractJob, T extends En
     {
         if (getOwnBuilding() != null)
         {
-            final List<T> animal = allAnimals.stream()
+            final List<T> animals = allAnimals.stream()
                     .filter(animalToButcher -> !animalToButcher.isChild()).collect(Collectors.toList());
 
-            final int numOfAnimals = animal.size();
+            if (animals.isEmpty())
+                return false;
+
+            final int numOfAnimals = allAnimals.size();
             final int maxAnimals = getOwnBuilding().getBuildingLevel() * getMaxAnimalMultiplier();
 
             return numOfAnimals > maxAnimals;
