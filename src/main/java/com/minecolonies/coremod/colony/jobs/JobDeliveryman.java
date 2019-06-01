@@ -163,12 +163,24 @@ public class JobDeliveryman extends AbstractJob
     @SuppressWarnings(UNCHECKED)
     public IRequest<Delivery> getCurrentTask()
     {
-        if (getTaskQueueFromDataStore().isEmpty())
+        final LinkedList<IToken<?>> taskQueue = getTaskQueueFromDataStore();
+        if (taskQueue.isEmpty())
         {
             return null;
         }
 
-        return (IRequest<Delivery>) getColony().getRequestManager().getRequestForToken(getTaskQueueFromDataStore().peekFirst());
+        if (getColony().getRequestManager() != null)
+        {
+            final IToken token = taskQueue.peekFirst();
+            final IRequest<Delivery> request = (IRequest<Delivery>) getColony().getRequestManager().getRequestForToken(token);
+            if (request == null)
+            {
+                taskQueue.remove(token);
+            }
+            return request; //even if it's null, it'll be checked again really soon.
+        }
+
+        return null;
     }
 
     /**

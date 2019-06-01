@@ -540,7 +540,16 @@ public abstract class AbstractEntityAIHerder<J extends AbstractJob, T extends En
     public ItemStack getBreedingItems()
     {
         final ItemStack breedingItem = getBreedingItem().copy();
-        ItemStackUtils.setSize(breedingItem, 2);
+
+        if (getOwnBuilding() != null)
+        {
+            ItemStackUtils.setSize(breedingItem, 4 * getOwnBuilding().getBuildingLevel());
+        }
+        else
+        {
+            ItemStackUtils.setSize(breedingItem, 16);
+        }
+
         return breedingItem;
     }
 

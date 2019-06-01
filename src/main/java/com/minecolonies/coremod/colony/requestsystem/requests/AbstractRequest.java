@@ -143,7 +143,11 @@ public abstract class AbstractRequest<R extends IRequestable> implements IReques
         {
             try
             {
-                manager.getRequestForToken(getParent()).childStateUpdated(manager, getToken());
+                final IRequest request = manager.getRequestForToken(getParent());
+                if (request != null)
+                {
+                    request.childStateUpdated(manager, getToken());
+                }
             }
             catch (final IllegalArgumentException ex)
             {
