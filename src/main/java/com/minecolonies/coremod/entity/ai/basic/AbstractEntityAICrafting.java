@@ -127,6 +127,21 @@ public abstract class AbstractEntityAICrafting<J extends AbstractJobCrafter> ext
         return GET_RECIPE;
     }
 
+    private void cancelCurrentRequest()
+    {
+        if (worker.getCitizenColonyHandler().getColony() != null && worker.getCitizenColonyHandler().getColony().getRequestManager() != null)
+        {
+            if (job.getCurrentTask().getParent() != null)
+            {
+                worker.getCitizenColonyHandler().getColony().getRequestManager().updateRequestState(job.getCurrentTask().getParent(), RequestState.CANCELLED);
+            }
+            else
+            {
+                worker.getCitizenColonyHandler().getColony().getRequestManager().updateRequestState(job.getCurrentTask().getToken(), RequestState.CANCELLED);
+            }
+        }
+    }
+
     /**
      * Query the IRecipeStorage of the first request in the queue.
      * @return the next state to go to.
@@ -144,7 +159,7 @@ public abstract class AbstractEntityAICrafting<J extends AbstractJobCrafter> ext
 
         if (currentRecipeStorage == null)
         {
-            worker.getCitizenColonyHandler().getColony().getRequestManager().updateRequestState(currentTask.getToken(), RequestState.CANCELLED);
+            cancelCurrentRequest();
             setDelay(TICKS_20);
             return START_WORKING;
         }
@@ -224,7 +239,7 @@ public abstract class AbstractEntityAICrafting<J extends AbstractJobCrafter> ext
 
         if (maxCraftingCount == 0)
         {
-            getOwnBuilding().getColony().getRequestManager().updateRequestState(job.getCurrentTask().getToken(), RequestState.CANCELLED);
+            cancelCurrentRequest();
             maxCraftingCount = 0;
             progress = 0;
             craftCounter = 0;
