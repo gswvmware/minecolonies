@@ -44,14 +44,19 @@ import com.minecolonies.coremod.util.ChunkDataHelper;
 import com.minecolonies.coremod.util.ColonyUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemFirework;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -122,6 +127,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
 
     /**
      * Getter for the custom name of a building.
+     *
      * @return the custom name.
      */
     @NotNull
@@ -257,7 +263,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
     /**
      * Adds work orders to the {@link Colony#getWorkManager()}.
      *
-     * @param level Desired level.
+     * @param level   Desired level.
      * @param builder the assigned builder.
      */
     protected void requestWorkOrder(final int level, final BlockPos builder)
@@ -284,33 +290,33 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
               "entity.builder.messageBuildersTooFar");
             return;
         }
-        
-        if(getLocation().getY() + getHeight() >= 256)
+
+        if (getLocation().getY() + getHeight() >= 256)
         {
-        	LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
-        	  "entity.builder.messageBuildTooHigh");
+            LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
+              "entity.builder.messageBuildTooHigh");
             return;
         }
-        else if(getLocation().getY() <= 1)
+        else if (getLocation().getY() <= 1)
         {
-        	LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
-        	  "entity.builder.messageBuildTooLow");
+            LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
+              "entity.builder.messageBuildTooLow");
             return;
         }
 
         if (!builder.equals(BlockPos.ORIGIN))
         {
-             final AbstractBuilding building =  colony.getBuildingManager().getBuilding(builder);
-             if (building instanceof AbstractBuildingStructureBuilder && (building.getBuildingLevel() >= level || canBeBuiltByBuilder(level)))
-             {
-                 workOrderBuildBuilding.setClaimedBy(builder);
-             }
-             else
-             {
-                 LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
-                   "entity.builder.messageBuilderNecessary", Integer.toString(level));
-                 return;
-             }
+            final AbstractBuilding building = colony.getBuildingManager().getBuilding(builder);
+            if (building instanceof AbstractBuildingStructureBuilder && (building.getBuildingLevel() >= level || canBeBuiltByBuilder(level)))
+            {
+                workOrderBuildBuilding.setClaimedBy(builder);
+            }
+            else
+            {
+                LanguageHandler.sendPlayersMessage(colony.getMessageEntityPlayers(),
+                  "entity.builder.messageBuilderNecessary", Integer.toString(level));
+                return;
+            }
         }
 
         colony.getWorkManager().addWorkOrder(workOrderBuildBuilding, false);
@@ -395,11 +401,12 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
 
     /**
      * Method to calculate the radius to be claimed by this building depending on the level.
+     *
      * @return the radius.
      */
     public int getClaimRadius()
     {
-        switch(getBuildingLevel())
+        switch (getBuildingLevel())
         {
             case 3:
                 return 1;
@@ -446,7 +453,6 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
         }
         ByteBufUtils.writeTag(buf, StandardFactoryController.getInstance().serialize(getRequesterId()));
         ByteBufUtils.writeTag(buf, requestSystemCompound);
-
     }
 
     /**
@@ -461,6 +467,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
 
     /**
      * Set the custom building name of the building.
+     *
      * @param name the name to set.
      */
     public void setCustomBuildingName(final String name)
@@ -470,7 +477,8 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
     }
 
     /**
-     * Check if the building should be gathered by the dman.
+     * Check if the building should be gathered by the delivery man.
+     *
      * @return true if so.
      */
     public boolean canBeGathered()
@@ -491,7 +499,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
     /**
      * Requests an upgrade for the current building.
      *
-     * @param player the requesting player.
+     * @param player  the requesting player.
      * @param builder the assigned builder.
      */
     public void requestUpgrade(final EntityPlayer player, final BlockPos builder)
@@ -508,7 +516,7 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
 
     /**
      * Requests a repair for the current building.
-     * @param builder
+     *
      * @param builder the assigned builder.
      */
     public void requestRepair(final BlockPos builder)
@@ -577,7 +585,65 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
         this.setHeight(wrapper.getHeight());
         this.setCorners(corners.getFirst().getFirst(), corners.getFirst().getSecond(), corners.getSecond().getFirst(), corners.getSecond().getSecond());
         this.isBuilt = true;
+
+        if (newLevel > getBuildingLevel())
+        {
+            final AxisAlignedBB realaabb = getTargetableArea(colony.getWorld());
+            final EntityFireworkRocket firework = new EntityFireworkRocket(colony.getWorld(), realaabb.maxX, realaabb.maxY, realaabb.maxZ, genFireworkItemStack(newLevel));
+
+            colony.getWorld().spawnEntity(firework);
+            final EntityFireworkRocket fireworka = new EntityFireworkRocket(colony.getWorld(), realaabb.maxX, realaabb.maxY, realaabb.minZ, genFireworkItemStack(newLevel));
+
+            colony.getWorld().spawnEntity(fireworka);
+            final EntityFireworkRocket fireworkb = new EntityFireworkRocket(colony.getWorld(), realaabb.minX, realaabb.maxY, realaabb.maxZ, genFireworkItemStack(newLevel));
+
+            colony.getWorld().spawnEntity(fireworkb);
+            final EntityFireworkRocket fireworkc = new EntityFireworkRocket(colony.getWorld(), realaabb.minX, realaabb.maxY, realaabb.minZ, genFireworkItemStack(newLevel));
+
+            colony.getWorld().spawnEntity(fireworkc);
+        }
     }
+
+    /**
+     * Generates random firework with various properties.
+     *
+     * @return ItemStack of random firework
+     */
+    private ItemStack genFireworkItemStack(final int explosionAmount)
+    {
+        final Random rand = new Random();
+
+        final ItemStack fireworkItem = new ItemStack(new ItemFirework());
+        final NBTTagCompound itemStackCompound = fireworkItem.getTagCompound() != null ? fireworkItem.getTagCompound() : new NBTTagCompound();
+        final NBTTagCompound fireworksCompound = new NBTTagCompound();
+        final NBTTagList explosionsTagList = new NBTTagList();
+        for (int i = 0; i < explosionAmount; i++)
+        {
+            final NBTTagCompound explosionTag = new NBTTagCompound();
+
+            explosionTag.setBoolean("Flicker", rand.nextInt(2) == 0);
+            explosionTag.setBoolean("Trail", rand.nextInt(2) == 0);
+            explosionTag.setInteger("Type", rand.nextInt(5));
+
+            final int numberOfColours = rand.nextInt(3) + 1;
+            final int[] colors = new int[numberOfColours];
+
+            for (int ia = 0; ia < numberOfColours; ia++)
+            {
+                colors[ia] = ItemDye.DYE_COLORS[rand.nextInt(15)];
+            }
+
+            explosionTag.setIntArray("Colors", colors);
+            explosionsTagList.appendTag(explosionTag);
+        }
+
+        fireworksCompound.setTag("Explosions", explosionsTagList);
+        itemStackCompound.setTag("Fireworks", fireworksCompound);
+
+        fireworkItem.setTagCompound(itemStackCompound);
+        return fireworkItem;
+    }
+
     //------------------------- Starting Required Tools/Item handling -------------------------//
 
     /**
@@ -785,9 +851,9 @@ public abstract class AbstractBuilding extends AbstractBuildingContainer impleme
     /**
      * Create a request for the building.
      *
-     * @param requested   the request to create.
-     * @param async       if async or not.
-     * @param <R>         the type of the request.
+     * @param requested the request to create.
+     * @param async     if async or not.
+     * @param <R>       the type of the request.
      * @return the Token of the request.
      */
     public <R extends IRequestable> IToken<?> createRequest(@NotNull final R requested, final boolean async)
