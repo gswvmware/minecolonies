@@ -466,4 +466,10 @@ public class TileEntityColonyBuilding extends TileEntityChest implements ITileEn
     {
         return super.getBlockType();
     }
+
+    @Override
+    public boolean isInvalid()
+    {
+        return super.isInvalid();
+    }
 }

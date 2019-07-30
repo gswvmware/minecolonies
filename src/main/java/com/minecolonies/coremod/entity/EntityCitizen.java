@@ -53,6 +53,7 @@ import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.scoreboard.Team;
@@ -1480,4 +1481,12 @@ public class EntityCitizen extends AbstractEntityCitizen implements IEntityCitiz
     {
         return false;
     }
+
+    @NotNull
+    @Override
+    public EntityDataManager getDataManager()
+    {
+        return this.dataManager;
+    }
 }
+
