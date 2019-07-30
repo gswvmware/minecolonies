@@ -11,6 +11,7 @@ import com.minecolonies.coremod.colony.buildings.IBuildingContainer;
 import com.minecolonies.coremod.colony.buildings.views.AbstractBuildingView;
 import com.minecolonies.coremod.colony.buildings.views.IBuildingView;
 import com.minecolonies.coremod.inventory.api.CombinedItemHandler;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -457,5 +458,12 @@ public class TileEntityColonyBuilding extends TileEntityChest implements ITileEn
             return (T) this.combinedInv;
         }
         return super.getCapability(capability, facing);
+    }
+
+    @NotNull
+    @Override
+    public Block getBlockType()
+    {
+        return super.getBlockType();
     }
 }
