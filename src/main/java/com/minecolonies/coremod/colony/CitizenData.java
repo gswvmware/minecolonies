@@ -25,6 +25,7 @@ import com.minecolonies.coremod.inventory.InventoryCitizen;
 import com.minecolonies.coremod.util.TeleportHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -752,7 +753,7 @@ public class CitizenData implements ICitizenData
     public void updateCitizenEntityIfNecessary()
     {
         final List<IEntityCitizen> list = colony.getWorld()
-                                            .getLoadedEntityList()
+                                            .getEntities(EntityLivingBase.class, e -> e instanceof IEntityCitizen)
                                             .stream()
                                             .filter(e -> e instanceof IEntityCitizen)
                                             .map(e -> (IEntityCitizen) e)
