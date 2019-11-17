@@ -1,7 +1,7 @@
 package com.minecolonies.api.colony.interactionhandling.registry;
 
 import com.minecolonies.api.IMinecoloniesAPI;
-import com.minecolonies.api.colony.interactionhandling.InteractionType;
+import com.minecolonies.api.colony.interactionhandling.type.InteractionType;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public interface IInteractionTypeRegistry

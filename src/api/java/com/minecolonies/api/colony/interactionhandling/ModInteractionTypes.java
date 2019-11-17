@@ -1,5 +1,7 @@
 package com.minecolonies.api.colony.interactionhandling;
 
+import com.minecolonies.api.colony.interactionhandling.type.InteractionType;
+
 public final class ModInteractionTypes
 {
 

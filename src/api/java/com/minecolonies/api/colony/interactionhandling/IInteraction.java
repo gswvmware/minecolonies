@@ -1,6 +1,7 @@
 package com.minecolonies.api.colony.interactionhandling;
 
 import com.minecolonies.api.colony.ICitizenData;
+import com.minecolonies.api.colony.interactionhandling.type.InteractionType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -14,20 +15,20 @@ import org.jetbrains.annotations.Nullable;
 public interface IInteraction extends INBTSerializable<CompoundNBT>
 {
     /**
+     * The type of the interaction.
+     *
+     * @return The type.
+     */
+    InteractionType getType();
+
+    /**
      * Called every tick to ensure the interaction gets updated.
      *
      * @param data The citizen with the interaction, which gets updated.
      */
-    void onUpdate(@NotNull final ICitizenData data);
-
-    /**
-     * Indicates if this interaction is still valid.
-     *
-     * @return {@code True} to leave the interaction unsolved, {@code False} to indicate that this interaction has been resolved.
-     */
-    default boolean isUnsolved()
+    default void onUpdate(@NotNull final ICitizenData data)
     {
-        return false;
+        //Noop
     }
 
     /**
