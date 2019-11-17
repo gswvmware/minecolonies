@@ -9,6 +9,7 @@ import com.minecolonies.api.colony.buildings.IBuilding;
 import com.minecolonies.api.colony.buildings.IBuildingWorker;
 import com.minecolonies.api.colony.interactionhandling.IInteraction;
 import com.minecolonies.api.colony.interactionhandling.registry.IInteractionTypeRegistry;
+import com.minecolonies.api.colony.interactionhandling.type.InteractionType;
 import com.minecolonies.api.colony.jobs.IJob;
 import com.minecolonies.api.colony.jobs.registry.IJobDataManager;
 import com.minecolonies.api.colony.requestsystem.requestable.IRequestable;
@@ -273,11 +274,11 @@ public class CitizenData implements ICitizenData
         this.automaticInteractions.forEach(interaction -> interaction.onUpdate(this));
         this.forcedInteractions.forEach(interaction -> interaction.onUpdate(this));
 
-        final List<IInteraction> toRemove = this.automaticInteractions.stream().filter(i -> !i.isUnsolved()).collect(Collectors.toList());
+        final List<IInteraction> toRemove = this.automaticInteractions.stream().filter(i -> !i.getType().isValid(this)).collect(Collectors.toList());
         this.automaticInteractions.removeAll(toRemove);
 
         final List<IInteraction> toAdd =
-          IInteractionTypeRegistry.getInstance().getValues().stream().map(t -> t.create(this)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
+          IInteractionTypeRegistry.getInstance().getValues().stream().filter(i -> i.isValid(this)).map(InteractionType::create).collect(Collectors.toList());
         this.automaticInteractions.addAll(toAdd);
     }
 
