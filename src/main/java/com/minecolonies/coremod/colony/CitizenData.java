@@ -1,11 +1,14 @@
 package com.minecolonies.coremod.colony;
 
+import com.google.common.collect.Sets;
 import com.ldtteam.structurize.util.LanguageHandler;
 import com.minecolonies.api.MinecoloniesAPIProxy;
 import com.minecolonies.api.colony.ICitizenData;
 import com.minecolonies.api.colony.IColony;
 import com.minecolonies.api.colony.buildings.IBuilding;
 import com.minecolonies.api.colony.buildings.IBuildingWorker;
+import com.minecolonies.api.colony.interactionhandling.IInteraction;
+import com.minecolonies.api.colony.interactionhandling.registry.IInteractionTypeRegistry;
 import com.minecolonies.api.colony.jobs.IJob;
 import com.minecolonies.api.colony.jobs.registry.IJobDataManager;
 import com.minecolonies.api.colony.requestsystem.requestable.IRequestable;
@@ -16,10 +19,10 @@ import com.minecolonies.api.util.BlockPosUtil;
 import com.minecolonies.api.util.Log;
 import com.minecolonies.api.util.constant.Suppression;
 import com.minecolonies.coremod.MineColonies;
+import com.minecolonies.coremod.colony.interactionhandling.ServerCitizenInteractionResponseHandler;
 import com.minecolonies.coremod.entity.ai.basic.AbstractAISkeleton;
 import com.minecolonies.coremod.entity.citizen.EntityCitizen;
 import com.minecolonies.coremod.entity.citizen.citizenhandlers.CitizenHappinessHandler;
-import com.minecolonies.coremod.colony.interactionhandling.ServerCitizenInteractionResponseHandler;
 import com.minecolonies.coremod.util.ExperienceUtils;
 import com.minecolonies.coremod.util.TeleportHelper;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -211,7 +214,9 @@ public class CitizenData implements ICitizenData
     /**
      * The citizen chat options on the server side.
      */
-    private final Map<ITextComponent, ServerCitizenInteractionResponseHandler> citizenChatOptions = new HashMap<>();
+    private final Map<ITextComponent, ServerCitizenInteractionResponseHandler> citizenChatOptions    = new HashMap<>();
+    private final Set<IInteraction>                                            automaticInteractions = Sets.newConcurrentHashSet();
+    private final Set<IInteraction>                                            forcedInteractions    = Sets.newConcurrentHashSet();
 
     /**
      * Create a CitizenData given an ID.
@@ -235,6 +240,45 @@ public class CitizenData implements ICitizenData
         {
             citizenChatOptions.get(key).onResponseTriggered(response);
         }
+    }
+
+    @Override
+    public void addInteraction(@NotNull final IInteraction interaction, final boolean forced)
+    {
+        if (forced)
+        {
+            this.automaticInteractions.remove(interaction);
+        }
+
+        if (forced)
+        {
+            this.forcedInteractions.add(interaction);
+        }
+        else
+        {
+            this.automaticInteractions.add(interaction);
+        }
+    }
+
+    @Override
+    public void removeInteraction(@NotNull final IInteraction interaction)
+    {
+        this.automaticInteractions.remove(interaction);
+        this.forcedInteractions.remove(interaction);
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        this.automaticInteractions.forEach(interaction -> interaction.onUpdate(this));
+        this.forcedInteractions.forEach(interaction -> interaction.onUpdate(this));
+
+        final List<IInteraction> toRemove = this.automaticInteractions.stream().filter(i -> !i.isUnsolved()).collect(Collectors.toList());
+        this.automaticInteractions.removeAll(toRemove);
+
+        final List<IInteraction> toAdd =
+          IInteractionTypeRegistry.getInstance().getValues().stream().map(t -> t.create(this)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
+        this.automaticInteractions.addAll(toAdd);
     }
 
     /**

@@ -7,6 +7,7 @@ import com.minecolonies.api.colony.buildings.registry.BuildingEntry;
 import com.minecolonies.api.colony.buildings.registry.IBuildingDataManager;
 import com.minecolonies.api.colony.guardtype.GuardType;
 import com.minecolonies.api.colony.guardtype.registry.IGuardTypeDataManager;
+import com.minecolonies.api.colony.interactionhandling.InteractionType;
 import com.minecolonies.api.colony.interactionhandling.registry.IInteractionResponseHandlerDataManager;
 import com.minecolonies.api.colony.interactionhandling.registry.InteractionResponseHandlerEntry;
 import com.minecolonies.api.colony.jobs.registry.IJobDataManager;
@@ -89,6 +90,12 @@ public final class MinecoloniesAPIProxy implements IMinecoloniesAPI
     public IForgeRegistry<InteractionResponseHandlerEntry> getInteractionResponseHandlerRegistry()
     {
         return apiInstance.getInteractionResponseHandlerRegistry();
+    }
+
+    @Override
+    public IForgeRegistry<InteractionType> getInteractionTypeRegistry()
+    {
+        return apiInstance.getInteractionTypeRegistry();
     }
 
     @Override

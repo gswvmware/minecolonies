@@ -10,10 +10,10 @@ import com.minecolonies.api.util.constant.NbtTagConstants;
 import com.minecolonies.api.util.constant.ToolType;
 import com.minecolonies.coremod.colony.FieldDataModifier;
 import com.minecolonies.coremod.colony.jobs.JobFarmer;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import org.jetbrains.annotations.NotNull;
@@ -236,14 +236,6 @@ public class CitizenHappinessHandler implements ICitizenHappinessHandler
         if (!hasHouse && !citizen.isChild())
         {
             numberOfDaysWithoutHouse++;
-            if (numberOfDaysWithoutHouse > DEMANDS_DAYS_WITHOUT_HOUSE)
-            {
-                chatProxy.setCurrentChat("entity.citizen.demandsHouse", citizen.getName());
-            }
-            else if (numberOfDaysWithoutHouse > COMPLAIN_DAYS_WITHOUT_HOUSE)
-            {
-                chatProxy.setCurrentChat("entity.citizen.noHouse", citizen.getName());
-            }
         }
         else
         {
@@ -477,6 +469,18 @@ public class CitizenHappinessHandler implements ICitizenHappinessHandler
         }
 
         return value;
+    }
+
+    @Override
+    public int getNumberOfDaysWithoutHouse()
+    {
+        return numberOfDaysWithoutHouse;
+    }
+
+    @Override
+    public int getNumberOfDaysWithoutJob()
+    {
+        return numberOfDaysWithoutJob;
     }
 
     /**

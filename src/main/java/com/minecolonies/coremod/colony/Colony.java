@@ -850,6 +850,7 @@ public class Colony implements IColony
     @Override
     public void onServerTick(@NotNull final TickEvent.ServerTickEvent event)
     {
+        this.getCitizenManager().getCitizens().forEach(ICitizenData::onUpdate);
     }
 
     /**

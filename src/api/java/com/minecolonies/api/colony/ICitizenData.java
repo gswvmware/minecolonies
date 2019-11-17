@@ -2,15 +2,16 @@ package com.minecolonies.api.colony;
 
 import com.minecolonies.api.colony.buildings.IBuilding;
 import com.minecolonies.api.colony.buildings.IBuildingWorker;
+import com.minecolonies.api.colony.interactionhandling.IInteraction;
 import com.minecolonies.api.colony.jobs.IJob;
 import com.minecolonies.api.colony.requestsystem.requestable.IRequestable;
 import com.minecolonies.api.colony.requestsystem.token.IToken;
 import com.minecolonies.api.entity.citizen.AbstractEntityCitizen;
 import com.minecolonies.api.entity.citizen.citizenhandlers.ICitizenHappinessHandler;
 import com.minecolonies.api.inventory.InventoryCitizen;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -501,4 +502,25 @@ public interface ICitizenData extends INBTSerializable<CompoundNBT>
      * @param response the triggered response.
      */
     void onResponseTriggered(@NotNull final ITextComponent key, @NotNull final ITextComponent response);
+
+    /**
+     * Adds a new interaction to the citizen, possibly forced. Forced interactions are not automatically removed when they are resolved, but have to be removed via: {@link
+     * #removeInteraction(IInteraction)}
+     *
+     * @param interaction The interaction to add.
+     * @param forced      {@code True} to force the interaction.
+     */
+    void addInteraction(@NotNull final IInteraction interaction, final boolean forced);
+
+    /**
+     * Removes an interaction, regardless of the fact that the given interaction was previously forced or not.
+     *
+     * @param interaction The interaction to remove.
+     */
+    void removeInteraction(@NotNull final IInteraction interaction);
+
+    /**
+     * Ticks when the server updates.
+     */
+    void onUpdate();
 }

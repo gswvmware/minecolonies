@@ -7,13 +7,14 @@ import com.minecolonies.api.colony.buildings.registry.BuildingEntry;
 import com.minecolonies.api.colony.buildings.registry.IBuildingDataManager;
 import com.minecolonies.api.colony.guardtype.GuardType;
 import com.minecolonies.api.colony.guardtype.registry.IGuardTypeDataManager;
+import com.minecolonies.api.colony.interactionhandling.InteractionType;
 import com.minecolonies.api.colony.interactionhandling.registry.IInteractionResponseHandlerDataManager;
 import com.minecolonies.api.colony.interactionhandling.registry.InteractionResponseHandlerEntry;
 import com.minecolonies.api.colony.jobs.registry.IJobDataManager;
 import com.minecolonies.api.colony.jobs.registry.JobEntry;
 import com.minecolonies.api.compatibility.IFurnaceRecipes;
-import com.minecolonies.api.entity.ai.registry.IMobAIRegistry;
 import com.minecolonies.api.configuration.Configuration;
+import com.minecolonies.api.entity.ai.registry.IMobAIRegistry;
 import com.minecolonies.api.entity.pathfinding.registry.IPathNavigateRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -41,6 +42,8 @@ public interface IMinecoloniesAPI
     IForgeRegistry<JobEntry> getJobRegistry();
 
     IForgeRegistry<InteractionResponseHandlerEntry> getInteractionResponseHandlerRegistry();
+
+    IForgeRegistry<InteractionType> getInteractionTypeRegistry();
 
     IGuardTypeDataManager getGuardTypeDataManager();
 

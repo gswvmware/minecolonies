@@ -1,8 +1,8 @@
 package com.minecolonies.api.entity.citizen.citizenhandlers;
 
 import com.minecolonies.api.util.constant.IToolType;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
@@ -79,6 +79,20 @@ public interface ICitizenHappinessHandler
      * @return current citizens overall happiness
      */
     double getHappiness();
+
+    /**
+     * Gives access to the number of in game days that the citizen is without a house.
+     *
+     * @return the number of in game days that the citizen is without a house.
+     */
+    int getNumberOfDaysWithoutHouse();
+
+    /**
+     * Gives access to the number of in game days that the citizen is without a job.
+     *
+     * @return the number of in game days that the citizen is without a job.
+     */
+    int getNumberOfDaysWithoutJob();
 
     /**
      * @return current food modifier for happiness
