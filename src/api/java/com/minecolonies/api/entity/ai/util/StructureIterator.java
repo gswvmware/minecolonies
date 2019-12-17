@@ -486,8 +486,6 @@ public class StructureIterator
             final IBlockState structureBlockState = metadata;
             final Block structureBlock = structureBlockState.getBlock();
 
-            Log.getLogger().warn("comparing" + blockPosition.toString());
-
             //All worldBlocks are equal the substitution block
             if (structureBlockEqualsWorldBlock(structureBlock, worldBlock, worldMetadata))
             {

@@ -397,9 +397,12 @@ public abstract class AbstractEntityAIStructureWithWorkOrder<J extends AbstractJ
             getOwnBuilding(AbstractBuildingStructureBuilder.class).setProgressPos(null, StructureIterator.Stage.CLEAR);
             return true;
         }
-        else return job.getWorkOrder() != null
+
+        final BlockPos pos = incrementBlock(currentStructure.getCurrentBlockPosition(), new BlockPos(currentStructure.getWidth(), currentStructure.getLength(), currentStructure.getHeight()));
+        Log.getLogger().warn(pos.toString() + " " +  currentStructure.getCurrentBlockPosition().toString() + " " + currentStructure.getWidth() + " " + currentStructure.getLength() + " " + currentStructure.getHeight());
+        return job.getWorkOrder() != null
                       && ( !world.getChunk(job.getWorkOrder().getBuildingLocation()).isLoaded()
-                             || (currentStructure != null && !world.getChunk(incrementBlock(currentStructure.getCurrentBlockPosition(), new BlockPos(currentStructure.getWidth(), currentStructure.getLength(), currentStructure.getHeight()))).isLoaded()));
+                             || (currentStructure != null && !world.getChunk(pos).isLoaded()));
     }
 
     /**
