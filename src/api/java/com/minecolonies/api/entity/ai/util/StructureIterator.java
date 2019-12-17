@@ -7,6 +7,7 @@ import com.minecolonies.api.colony.IColonyManager;
 import com.minecolonies.api.configuration.Configurations;
 import com.minecolonies.api.util.BlockPosUtil;
 import com.minecolonies.api.util.BlockUtils;
+import com.minecolonies.api.util.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockStairs;
@@ -484,6 +485,8 @@ public class StructureIterator
 
             final IBlockState structureBlockState = metadata;
             final Block structureBlock = structureBlockState.getBlock();
+
+            Log.getLogger().warn("comparing" + blockPosition.toString());
 
             //All worldBlocks are equal the substitution block
             if (structureBlockEqualsWorldBlock(structureBlock, worldBlock, worldMetadata))

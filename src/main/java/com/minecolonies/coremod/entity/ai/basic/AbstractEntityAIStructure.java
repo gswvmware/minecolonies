@@ -326,11 +326,8 @@ public abstract class AbstractEntityAIStructure<J extends AbstractJobStructure> 
     {
         storeProgressPos(null, StructureIterator.Stage.CLEAR);
         incrementActionsDoneAndDecSaturation();
-        if (job instanceof AbstractJobStructure)
-        {
-            executeSpecificCompleteActions();
-            worker.getCitizenExperienceHandler().addExperience(XP_EACH_BUILDING);
-        }
+        executeSpecificCompleteActions();
+        worker.getCitizenExperienceHandler().addExperience(XP_EACH_BUILDING);
 
         return PICK_UP_RESIDUALS;
     }
